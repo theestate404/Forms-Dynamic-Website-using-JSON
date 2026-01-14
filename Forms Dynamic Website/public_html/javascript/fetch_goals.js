@@ -1,4 +1,4 @@
-let ascending = true;
+let sortBy = "ascending";
 let goal = null;
 let container = null;
 window.onload = () =>
@@ -11,6 +11,10 @@ window.onload = () =>
                     {
                         goal = jsonData.goal;
                         container = document.getElementById("target");
+                        
+                        goal.targets.forEach(target => {
+                            target.isFavourite = Math.random() < 0.33;
+                        });
                         displayData();
                     })
                     .catch(err =>
@@ -18,21 +22,39 @@ window.onload = () =>
                         console.error(err);
                         container.innerHTML = "Failed to load data";
                     });
-                    document.getElementById("sortButton").onclick = sort;
-        }
-function sort()
+                    document.getElementById("sortButton").onclick = switchSortBy;
+        };
+function switchSortBy()
 {
-    ascending = !ascending;
-    //sorts the data by the id and changes the text in the button when clicked
-    if (ascending)
+    if (sortBy === "ascending")
     {
-        goal.targets.sort((a, b) => a.id < b.id ? -1 : 1);
-        document.getElementById("sortButton").innerHTML = "Sort &#8593";
+        sortBy = "descending";
+    }
+    else if (sortBy === "descending")
+    {
+        sortBy = "favourites";
     }
     else
     {
+        sortBy = "ascending";
+    }
+    sortTargetsBy();
+}
+function sortTargetsBy()
+{
+    if (sortBy === "ascending")
+    {
+        goal.targets.sort((a, b) => a.id < b.id ? -1 : 1);
+        document.getElementById("sortButton").innerHTML = "Sort Ascending &#8593";
+    }
+    else if (sortBy === "descending")
+    {
         goal.targets.sort((a, b) => a.id < b.id ? 1 : -1);
-        document.getElementById("sortButton").innerHTML = "Sort &#8595";
+        document.getElementById("sortButton").innerHTML = "Sort Descending &#8595";
+    }
+    else
+    {
+        
     }
     //learned about being able to add something after a and b from https://www.w3schools.com/js/js_array_sort.asp where they sort by .year
     displayData();
@@ -48,15 +70,19 @@ function displayData() {
 
     goal.targets.forEach(target =>
     {
+        const favourite = target.isFavourite ? "&#9733 Favourited" : "&#9734";
         htmlString += `
+            </div>
             <hr>
-            <h3>Target ${target.number}</h3>
+            <div>
+            <h3>Target ${target.number} <span>${favourite}</span></h3>
             <p>${target.description}</p>
             `;
 
         target.examples.forEach(example =>
         {
             htmlString += `
+                
                     <h4>${example.title}</h4>
                     <p>${example.description}</p>
                     `;
