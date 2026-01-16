@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .tag 
+            {
+                display: inline-block;
+                background: #f0f0f0;
+                padding: 5px 10px;
+                margin: 3px;
+                border-radius: 8px;
+            }
+            </style>
+            <script src = "javascript/fetch_goals.js"></script>
+            <script src = "javascript/tag_manager.js"></script>
+        </head>
+        <body>
+            <div id = "modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6)">
+                <div style="background:#fff; margin:5% auto; padding:20px; width:80%">
+                    <button id = "closeModal">Close</button>
+                    <div id = "modalContent"></div>
+                </div>
+            </div>
+            <div id = "tagContainer"></div>
+            <div id= "target"></div>
+
+
+        </body>
+    </html>
