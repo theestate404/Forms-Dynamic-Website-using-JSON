@@ -8,10 +8,39 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .tag
+            {
+                display: inline-block;
+                background: #f0f0f0;
+                padding: 5px 10px;
+                margin: 3px;
+                border-radius: 8px;
+            }
+        </style>
+        <script src = "javascript/tag_manager.js"></script>
         <script src = "javascript/fetch_goals.js"></script>
+        
     </head>
     <body>
-        <button id = "sortButton">Sort Ascending &#8593</button>
+        <div id = "infoModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6)">
+            <div style="background:#fff; margin:5% auto; padding:20px; width:80%">
+                <button id = "closeInfoModal">Close</button>
+                <div id = "infoModalContent"></div>
+            </div>
+        </div>
+        <button id = "showAllTags" onclick = "openTagModal()">Tags Manager</button>
+        <div id = "tagModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6)">
+            <div style="background:#fff; margin:5% auto; padding:20px; width:80%">
+                <button id = "closeTagModal">Close</button>
+                <input type = "text" id = "tagInput" placeholder = "Enter new tag">
+                <button id = "addTagButton">Add Tag</button>
+                <button id = "removeTagButton">Remove Tag</button>
+                <div id = "tagModalContent"></div>
+            </div>
+        </div>
         <div id= "target"></div>
+
+
     </body>
 </html>
