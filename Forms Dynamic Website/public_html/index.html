@@ -23,22 +23,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         
     </head>
     <body>
-        <div id = "infoModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6)">
-            <div style="background:#fff; margin:5% auto; padding:20px; width:80%">
+        <dialog id = "infoModal">
                 <button id = "closeInfoModal">Close</button>
                 <div id = "infoModalContent"></div>
             </div>
-        </div>
+        </dialog>
         <button id = "showAllTags" onclick = "openTagModal()">Tags Manager</button>
-        <div id = "tagModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6)">
-            <div style="background:#fff; margin:5% auto; padding:20px; width:80%">
+        <dialog id = "tagModal">
                 <button id = "closeTagModal">Close</button>
                 <input type = "text" id = "tagInput" placeholder = "Enter new tag">
                 <button id = "addTagButton">Add Tag</button>
                 <button id = "removeTagButton">Remove Tag</button>
                 <div id = "tagModalContent"></div>
-            </div>
-        </div>
+        </dialog>
         <div id= "target"></div>
 
 

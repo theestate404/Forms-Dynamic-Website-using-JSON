@@ -1,57 +1,81 @@
-let sortBy = "ascending";
-let goal = null;
-let container = null;
+let sortTargetBy = "ascending", sortDescriptionBy = "ascending", goal = null, container = null
 // could not us window.onload on two separate .js files and found an alternative: https://stackoverflow.com/questions/67212323/two-js-files-with-window-onload-function-are-conflicting#:~:text=onload%20%2C%20as%20you%20have%20noticed,adds%20a%20listener%20when%20called.
 window.addEventListener("load", () => {
 
-    container = document.getElementById("target");
-    let url = "un_sustainability_goal_12.json";
+    container = document.getElementById("target")
+    let url = "un_sustainability_goal_12.json"
     fetch(url)
             .then(response => response.json())
             .then(jsonData =>
             {
-                goal = jsonData.goal;
+                goal = jsonData.goal
 
 
                 goal.targets.forEach(target => {
                     target.examples.forEach(example => {
-                        example.isFavourite = Math.random() < 0.33;
-                    });
-                });
-                displayData();
+                        example.isFavourite = Math.random() < 0.33
+                    })
+                })
+                displayData()
             }).catch(err =>
     {
-        console.error(err);
-        container.innerHTML = "Failed to load data";
-    });
-    document.getElementById("closeInfoModal").onclick = closeInfoModal;
+        console.error(err)
+        container.innerHTML = "Failed to load data"
+    })
     //had an issue where i couldnt get error handling to work but learned fetch() returns a promise and how to use .catch in : https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Async_JS/Promises#error_handling
-});
+})
 function switchSortTargets()
 {
-    if (sortBy === "ascending")
+    if (sortTargetBy === "ascending")
     {
-        sortBy = "descending";
-    } else
-    {
-        sortBy = "ascending";
+        sortTargetBy = "descending"
     }
-    sortTargets();
+    else
+    {
+        sortTargetBy = "ascending"
+    }
+    sortTargets()
 }
-
+function switchSortDescriptions()
+{
+    if (sortDescriptionBy === "ascending")
+    {
+        sortDescriptionBy = "descending"
+    }
+    else
+    {
+        sortDescriptionBy = "ascending"
+    }
+    sortDescriptions()
+}
+function sortDescriptions()
+{
+    if(sortDescriptionBy === "ascending")
+    {
+        goal.targets.sort()
+    }
+    else
+    {
+        goal.targets.reverse()
+    }
+    displayData()
+}
 function sortTargets()
 {
-    if (sortBy === "ascending")
+    if (sortTargetBy === "ascending")
     {
-        goal.targets.sort((a, b) => a.id < b.id ? -1 : 1);
-        document.getElementById("sortTarget").innerHTML = "Target &#8593";
-    } else if (sortBy === "descending")
+        document.getElementById("sortTarget").innerHTML = "Target &#8593"
+        goal.targets.sort((a, b) => a.id < b.id ? -1 : 1)
+        
+    } 
+    if (sortTargetBy === "descending")
     {
-        goal.targets.sort((a, b) => a.id < b.id ? 1 : -1);
-        document.getElementById("sortTarget").innerHTML = "Target &#8595";
+        document.getElementById("sortTarget").innerHTML = "Target &#8595"
+        goal.targets.sort((a, b) => a.id < b.id ? 1 : -1)
+        
     }
     //learned about being able to add something after a and b from https://www.w3schools.com/js/js_array_sort.asp where they sort by .year
-    displayData();
+    displayData()
 }
 function displayData() {
     //displays the data
@@ -64,63 +88,69 @@ function displayData() {
         <br>
     <table border = "5" width = "100%" align = "center" id = "dataTable">
         <tr>
-            <th id = "sortTarget">Target &#8593</th>
-            <th id = "sortTarget">Description</th>
+            <th id = "sortTarget"></th>
+            <th id = "sortDescription">Description</th>
         </tr>
-        `;
+        `
 
-    goal.targets.forEach((target, index) =>
+    goal.targets.forEach((target) =>
     {
-        const favourite = target.isFavourite ? "&#9733 Favourited" : "&#9734";
         htmlString += `
-        <tr data-index="${index}" class = "target_row">
+        <tr class = "target_row">
                 <td>${target.number}</td>
                 <td>${target.description}</td>
-            `;
+            `
 
-    });
-    htmlString += `</table>`;
+    })
+    htmlString += `</table>`
     htmlString += `
         <hr>
         <h3>Links</h3>
         <a href = "${goal.links.official}">${goal.links.official}</a>
         <br>
         <a href = "${goal.links.undp}">${goal.links.undp}</a>
-        `;
-    container.innerHTML = htmlString;
+        `
+    container.innerHTML = htmlString
 
-    document.getElementById("sortTarget").onclick = switchSortTargets;
-
-    document.querySelectorAll(".target_row").forEach(row => {
-        row.onclick = () => openInfoModal(goal.targets[row.dataset.index]);
-    });
+    document.getElementById("sortTarget").onclick = switchSortTargets
+    document.getElementById("sortDescription").onclick = switchSortDescriptions
+    document.querySelectorAll(".target_row").forEach((row, index) => {
+        row.onclick = () => openInfoModal(goal.targets[index])
+        //Learned about querySelectorAll https://www.w3schools.com/jsref/met_document_queryselectorall.asp
+        //Learned about the positioning in the brackets in forEach https://www.w3schools.com/jsref/jsref_foreach.asp
+    })
 }
 function openInfoModal(target)
 {
-    const infoModal = document.getElementById("infoModal");
-    const content = document.getElementById("infoModalContent");
+    displayInfoModal(target);
+    document.getElementById("infoModal").showModal(); 
+}
+function closeInfoModal()
+{
+    document.getElementById("infoModal").close();
+}
+function displayInfoModal(target)
+{
+    const content = document.getElementById("infoModalContent")
 
-    let html = `<h2>Target ${target.number}</h2>`;
+    let html = `<h2>Target ${target.number}</h2>`
 
     target.examples.forEach(example => {
-        const favourite = example.isFavourite ? "<span>&#9733</span> Favourited" : "<span>&#9734<span>";
+        const favourite = example.isFavourite ? "<span>&#9733</span> Favourited" : "<span>&#9734</span>"
         
         html += `
             <h4>${example.title}<span>  ${favourite}</span></h4>
             <p>${example.description}</p>
-        `;
+        `
 
         example.images.forEach(img => {
-            html += `<img src="${img}" width="200">`;
-        });
+            html += `<img src="${img}" width="200">`
+        })
 
-        html += `<p>Tags: ${example.tags.join(", ")}</p>`;
-    });
+        html += `<p>Tags: ${example.tags.join(", ")}</p>`
+    })
 //learned about .join for arrays from: https://www.w3schools.com/jsref/jsref_join.asp
-    content.innerHTML = html;
-    infoModal.style.display = "block";
-}
-function closeInfoModal()
-{
-    document.getElementById("infoModal").style.display = "none";
+    content.innerHTML = html
+    
+    document.getElementById("closeInfoModal").onclick = closeInfoModal;
 }
