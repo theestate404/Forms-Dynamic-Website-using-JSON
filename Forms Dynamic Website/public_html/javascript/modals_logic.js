@@ -9,7 +9,6 @@ function closeInfoModal()
 }
 function openTagModal()
 {
-    
     console.log(sortedTags)
     const container = document.getElementById('tagModalContent')
     container.innerHTML = ""
