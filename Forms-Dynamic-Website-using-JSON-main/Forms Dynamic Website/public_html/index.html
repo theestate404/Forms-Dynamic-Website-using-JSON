@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/style.css" rel="stylesheet" type="text/css"/>
+        <style>
+            
+        </style>
+        <script src = "javascript/tag_manager.js"></script>
+        <script src = "javascript/fetch_goals.js"></script>
+        
+    </head>
+    <body>
+        <dialog id = "infoModal">
+                <button id = "closeInfoModal">Close</button>
+                <div id = "infoModalContent"></div>
+        </dialog>
+        <button id = "showAllTags" onclick = "openTagModal()">Tags Manager</button>
+        <dialog id = "tagModal">
+                <button id = "closeTagModal">Close</button>
+                <input type = "text" id = "tagInput" placeholder = "Enter new tag">
+                <button id = "addTagButton">Add Tag</button>
+                <button id = "removeTagButton">Remove Tag</button>
+                <div id = "tagModalContent"></div>
+        </dialog>
+        <div id= "target"></div>
+
+
+    </body>
+</html>
