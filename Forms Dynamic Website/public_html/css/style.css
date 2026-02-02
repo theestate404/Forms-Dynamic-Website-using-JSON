@@ -1,0 +1,39 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : 2 Feb 2026, 17:12:31
+    Author     : renatolemes
+*/
+
+/*
+TO DO
+
+- Imgs on fetch_goals.js
+*/
+
+.tag
+{
+    display: inline-block;
+    background: #f0f0f0;
+    padding: 5px 10px;
+    margin: 3px;
+    border-radius: 8px;
+}
+#dataTable {
+    width: 80%;
+    margin: 40px auto;
+    border-collapse: collapse;
+}
+
+#dataTable th,
+#dataTable td {
+    border: 1px solid;
+    padding: 10px;
+    text-align: left;
+}
+
+#dataTable th {
+    background-color: grey;
+}
