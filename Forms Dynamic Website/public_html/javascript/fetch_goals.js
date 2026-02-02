@@ -55,13 +55,11 @@ function sortTargets()
 {
     if (sortTargetBy === "ascending")
     {
-        document.getElementById("sortTarget").innerHTML = "Target &#8593"
         goal.targets.sort((a, b) => a.id < b.id ? -1 : 1)
         
     } 
     else
     {
-        document.getElementById("sortTarget").innerHTML = "Target &#8595"
         goal.targets.sort((a, b) => a.id < b.id ? 1 : -1)
         
     }
@@ -77,7 +75,7 @@ function displayData() {
         <h2>${goal.title}</h2>
         <p>${goal.description}</p>
         <br>
-    <table border = "5" width = "100%" align = "center" id = "dataTable">
+    <table id = "dataTable">
         <tr>
             <th id = "sortTarget">Target ${sortTargetBy === "ascending" ? "&#8593" : "&#8595"}</th>
             <th id = "sortDescription">Description ${sortDescriptionBy === "ascending" ? "&#8593" : "&#8595"}</th>
