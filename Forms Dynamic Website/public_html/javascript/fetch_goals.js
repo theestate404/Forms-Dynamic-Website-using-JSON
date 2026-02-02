@@ -1,4 +1,7 @@
-let sortTargetBy = "ascending", sortDescriptionBy = "ascending", goal = null, container = null
+//Global varibles
+let sortTargetBy = "ascending", sortDescriptionBy = "ascending", goal = null, constainer = null
+
+
 // could not us window.onload on two separate .js files and found an alternative: https://stackoverflow.com/questions/67212323/two-js-files-with-window-onload-function-are-conflicting#:~:text=onload%20%2C%20as%20you%20have%20noticed,adds%20a%20listener%20when%20called.
 window.addEventListener("load", () => {
 
@@ -26,37 +29,25 @@ window.addEventListener("load", () => {
 })
 function switchSortTargets()
 {
-    if (sortTargetBy === "ascending")
-    {
-        sortTargetBy = "descending"
-    }
-    else
-    {
-        sortTargetBy = "ascending"
-    }
+    sortTargetBy = sortTargetBy === "ascending" ? "descending" : "ascending"
+    // found out about ternary operatorhttps://stackoverflow.com/questions/8860654/javascript-single-line-if-statement-best-syntax-this-alternative
+    // found out more about it here https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator
     sortTargets()
 }
 function switchSortDescriptions()
 {
-    if (sortDescriptionBy === "ascending")
-    {
-        sortDescriptionBy = "descending"
-    }
-    else
-    {
-        sortDescriptionBy = "ascending"
-    }
+    sortDescriptionBy = sortDescriptionBy === "ascending" ? "descending" : "ascending"
     sortDescriptions()
 }
 function sortDescriptions()
 {
     if(sortDescriptionBy === "ascending")
     {
-        goal.targets.sort()
+        goal.targets.sort((a, b) => a.description < b.description ? -1 : a.description > b.description ? 1 : 0)
     }
     else
     {
-        goal.targets.reverse()
+        goal.targets.sort((a, b) => a.description < b.description ? 1 : a.description > b.description ? -1 : 0)
     }
     displayData()
 }
@@ -68,7 +59,7 @@ function sortTargets()
         goal.targets.sort((a, b) => a.id < b.id ? -1 : 1)
         
     } 
-    if (sortTargetBy === "descending")
+    else
     {
         document.getElementById("sortTarget").innerHTML = "Target &#8595"
         goal.targets.sort((a, b) => a.id < b.id ? 1 : -1)
@@ -88,11 +79,11 @@ function displayData() {
         <br>
     <table border = "5" width = "100%" align = "center" id = "dataTable">
         <tr>
-            <th id = "sortTarget"></th>
-            <th id = "sortDescription">Description</th>
+            <th id = "sortTarget">Target ${sortTargetBy === "ascending" ? "&#8593" : "&#8595"}</th>
+            <th id = "sortDescription">Description ${sortDescriptionBy === "ascending" ? "&#8593" : "&#8595"}</th>
         </tr>
         `
-
+    // Adds the table rows for each target
     goal.targets.forEach((target) =>
     {
         htmlString += `
@@ -103,6 +94,8 @@ function displayData() {
 
     })
     htmlString += `</table>`
+    
+    // Link section
     htmlString += `
         <hr>
         <h3>Links</h3>
@@ -114,27 +107,20 @@ function displayData() {
 
     document.getElementById("sortTarget").onclick = switchSortTargets
     document.getElementById("sortDescription").onclick = switchSortDescriptions
+    
+    // click event for target row to open modal
     document.querySelectorAll(".target_row").forEach((row, index) => {
         row.onclick = () => openInfoModal(goal.targets[index])
         //Learned about querySelectorAll https://www.w3schools.com/jsref/met_document_queryselectorall.asp
         //Learned about the positioning in the brackets in forEach https://www.w3schools.com/jsref/jsref_foreach.asp
     })
 }
-function openInfoModal(target)
-{
-    displayInfoModal(target);
-    document.getElementById("infoModal").showModal(); 
-}
-function closeInfoModal()
-{
-    document.getElementById("infoModal").close();
-}
 function displayInfoModal(target)
 {
     const content = document.getElementById("infoModalContent")
 
     let html = `<h2>Target ${target.number}</h2>`
-
+    
     target.examples.forEach(example => {
         const favourite = example.isFavourite ? "<span>&#9733</span> Favourited" : "<span>&#9734</span>"
         

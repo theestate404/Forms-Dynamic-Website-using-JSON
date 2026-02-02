@@ -20,6 +20,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         </style>
         <script src = "javascript/tag_manager.js"></script>
         <script src = "javascript/fetch_goals.js"></script>
+        <script src = "javascript/modals_logic.js"></script>
         
     </head>
     <body>
@@ -34,6 +35,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <input type = "text" id = "tagInput" placeholder = "Enter new tag">
                 <button id = "addTagButton">Add Tag</button>
                 <button id = "removeTagButton">Remove Tag</button>
+                <button id = "modifyTagButton">Modify Tag</button>
+                <dialog id = "modifyTagModal">
+                    <button id = "closeModifyTag">Close</button>
+                    <input type = "text" id = "tagToModify" placeholder = "Tag to edit">
+                    <input type = "text" id = "newModifiedTag" placeholder = "New edited tag">
+                    <button id = "submitModifyTag">Submit</button>
+                </dialog>
                 <div id = "tagModalContent"></div>
         </dialog>
         <div id= "target"></div>
