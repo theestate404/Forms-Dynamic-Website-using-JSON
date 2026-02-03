@@ -1,0 +1,45 @@
+/*
+TO DO
+
+- Imgs on fetch_goals.js
+*/
+/*------------Dashboard Database------------*/
+#dataTable {
+    width: 80%;
+    margin: 40px auto;
+    border-collapse: collapse;
+}
+
+#dataTable th,
+#dataTable td {
+    border: 1px solid;
+    padding: 10px;
+    text-align: left;
+}
+.fav_cell{
+    text-align: center; //GENERAL note: centering of heart icon not working
+    font-size: 18px;
+    justify-content: center;
+}
+.actions_cell button{
+    margin-right: 6px; /*space between buttons*/
+    margin-bottom: 6px;
+    padding: 6px 10px; // 6px top/bottom   10px left/right
+    
+}
+/*------------Tags Manager window------------*/
+.tag
+{
+    display: inline-block;
+    background: #f0f0f0;
+    padding: 5px 10px;
+    margin: 3px;
+    border-radius: 8px;
+}
+#dataTable th {
+    background-color: grey;
+}
+/*------------Examples description window------------*/
+.rating_stars_display{
+    font-size: 18px; 
+}
