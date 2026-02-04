@@ -1,26 +1,9 @@
 /*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
-*/
-/* 
-    Created on : 2 Feb 2026, 17:12:31
-    Author     : renatolemes
-*/
-
-/*
 TO DO
 
 - Imgs on fetch_goals.js
 */
-
-.tag
-{
-    display: inline-block;
-    background: #f0f0f0;
-    padding: 5px 10px;
-    margin: 3px;
-    border-radius: 8px;
-}
+/*------------Dashboard Database------------*/
 #dataTable {
     width: 80%;
     margin: 40px auto;
@@ -33,7 +16,30 @@ TO DO
     padding: 10px;
     text-align: left;
 }
-
+.fav_cell{
+    text-align: center; /*GENERAL note: centering of heart icon not working*/
+    font-size: 18px;
+    justify-content: center;
+}
+.actions_cell button{
+    margin-right: 6px; /*space between buttons*/
+    margin-bottom: 6px;
+    padding: 6px 10px; /*6px top/bottom   10px left/right*/
+    
+}
+/*------------Tags Manager window------------*/
+.tag
+{
+    display: inline-block;
+    background: #f0f0f0;
+    padding: 5px 10px;
+    margin: 3px;
+    border-radius: 8px;
+}
 #dataTable th {
     background-color: grey;
+}
+/*------------Examples description window------------*/
+.rating_stars_display{
+    font-size: 18px; 
 }
