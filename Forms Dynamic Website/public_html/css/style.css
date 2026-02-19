@@ -43,3 +43,31 @@ TO DO
 .rating_stars_display{
     font-size: 18px; 
 }
+
+/*------------HIDE THE CARDS CONTAINER WHEN DESKTOP MODE------------*/
+#cardsContainer {
+    display: none;
+}
+
+/*------------MOBILE PHONES------------*/
+@media screen and (max-width: 600px) {
+    
+    #databaseTable {
+        display: none;   /* hides the table area */
+    }
+
+    #cardsContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 90%;
+        margin: 20px auto;
+    }
+
+    .card {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 12px;
+        background: white;
+    }
+}

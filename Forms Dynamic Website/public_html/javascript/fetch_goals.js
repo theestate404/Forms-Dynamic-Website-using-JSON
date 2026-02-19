@@ -1,10 +1,14 @@
 //Global varibles
-let sortTargetBy = "ascending", sortDescriptionBy = "ascending", goal = null, container = null;
-
+let goal = null, container = null;
+let sortDirection = 
+{
+     number: "ascending",
+     description: "ascending"
+};
 // Could not us window.onload on two separate .js files and found an alternative: https://stackoverflow.com/questions/67212323/two-js-files-with-window-onload-function-are-conflicting#:~:text=onload%20%2C%20as%20you%20have%20noticed,adds%20a%20listener%20when%20called.
 window.addEventListener("load", () => {
 
-    container = document.getElementById("target");
+    container = document.getElementById("databaseTable");
     let url = "un_sustainability_goal_12.json";
     fetch(url)
             .then(response => response.json())
@@ -33,48 +37,30 @@ window.addEventListener("load", () => {
             });
     // Had an issue where i couldnt get error handling to work but learned fetch() returns a promise and how to use .catch in : https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Async_JS/Promises#error_handling
 });
-/*-----------Switch target sort order-----------*/
-function switchSortTargets()
+/*-----------Sort targets by description or number and re-build table-----------*/
+function handleSort(column)
 {
-    sortTargetBy = sortTargetBy === "ascending" ? "descending" : "ascending";
-    // Found out about ternary operatorhttps://stackoverflow.com/questions/8860654/javascript-single-line-if-statement-best-syntax-this-alternative
-    // Found out more about it here https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator
-    sortTargets();
-}
-/*-----------Switch description sort order-----------*/
-function switchSortDescriptions()
-{
-    sortDescriptionBy = sortDescriptionBy === "ascending" ? "descending" : "ascending";
-    sortDescriptions();
-}
-/*-----------Sort targets by description and re-build table-----------*/
-function sortDescriptions()
-{
-    if (sortDescriptionBy === "ascending")
+    if (sortDirection[column] === "ascending")
     {
-        goal.targets.sort((a, b) => a.description < b.description ? -1 : a.description > b.description ? 1 : 0);
-    } else
+        sortDirection[column] = "descending";
+    }
+    else
     {
-        goal.targets.sort((a, b) => a.description < b.description ? 1 : a.description > b.description ? -1 : 0);
+        sortDirection[column] = "ascending";
+    }
+    
+    if(sortDirection[column] === "ascending")
+    {
+        goal.targets.sort((a, b) => a[column] < b[column]? -1: 1);
+    }
+    else
+    {
+        goal.targets.sort((a, b) => a[column] < b[column]? 1: -1);
+
     }
     displayData();
 }
-/*-----------Sort targets and re-build table-----------*/
-function sortTargets()
-{
-    if (sortTargetBy === "ascending")
-    {
-        goal.targets.sort((a, b) => a.id < b.id ? -1 : 1);
-
-    } else
-    {
-        goal.targets.sort((a, b) => a.id < b.id ? 1 : -1);
-
-    }
-    //learned about being able to add something after a and b from https://www.w3schools.com/js/js_array_sort.asp where they sort by .year
-    displayData();
-}
-/*-------------------Render goal info, table rows, and attach event handlers-------------------*/
+/*-------------------Render goal info and table rows-------------------*/
 function displayData() {
 
 //Data table display (What's seen on the webpage)
@@ -86,17 +72,17 @@ function displayData() {
         <br>
     <table id = "dataTable">
         <tr>
-            <th id = "sortTarget">Target ${sortTargetBy === "ascending" ? "&#8593" : "&#8595"}</th>
-            <th id = "sortDescription">Description ${sortDescriptionBy === "ascending" ? "&#8593" : "&#8595"}</th>
+            <th onClick = handleSort("number")>Target ${sortDirection[`number`] === "ascending" ? "&#8593" : "&#8595"}</th>
+            <th onClick = handleSort("description")>Description ${sortDirection[`description`] === "ascending" ? "&#8593" : "&#8595"}</th>
             
             <th id = "sortFavourite">Favourite</th>
             <th>Actions</th>
     </tr>
         `;
     // Adds the table rows for each target
-    goal.targets.forEach((target) =>
+    goal.targets.forEach((target, index) =>
     {
-        const targetIsFavourite = target.examples.some(example => example.isFavourite) //Some: at least one item is true
+        const targetIsFavourite = target.examples.some(example => example.isFavourite); //Some: at least one item is true
        //R Filled heart : empty heart
         let heart;
         if (targetIsFavourite){
@@ -106,8 +92,8 @@ function displayData() {
         }
         htmlString += `
         <tr class = "target_row">
-                <td>${target.number}</td>
-                <td>${target.description}</td>
+                <td onClick = "openInfoModal(goal.targets[${index}])">${target.number}</td>
+                <td onClick = "openInfoModal(goal.targets[${index}])">${target.description}</td>
                 <td class = "fav_cell">${heart}</td>
                 <td class = "actions_cell">
                 <button class = "edit_btn">Edit</button>    
@@ -128,29 +114,6 @@ function displayData() {
         <a href = "${goal.links.undp}">${goal.links.undp}</a>
         `;
     container.innerHTML = htmlString;
-
-    document.getElementById("sortTarget").onclick = switchSortTargets;
-    document.getElementById("sortDescription").onclick = switchSortDescriptions;
-
-    // Click event for target row to open modal
-    document.querySelectorAll(".target_row").forEach((row, index) => {
-        row.onclick = () => openInfoModal(goal.targets[index]);
-        
-        //Learned about querySelectorAll https://www.w3schools.com/jsref/met_document_queryselectorall.asp
-        //Learned about the positioning in the brackets in forEach https://www.w3schools.com/jsref/jsref_foreach.asp
-        
-        document.querySelectorAll(".actions_cell").forEach(cell => {
-            cell.addEventListener("click", (event) => {
-                event.stopPropagation(); // Prevents row click event
-        // Found out about preventing an event from happening https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation#:~:text=The%20stopPropagation()%20method%20of,on%20links%20are%20still%20processed.   
-                });
-            });
-        document.querySelectorAll(".fav_cell").forEach(cell => {
-            cell.addEventListener("click", (event) => {
-                event.stopPropagation();
-            });
-        });
-    }); 
 }
 /*---------------0–5 star rating string---------------*/
 function builtStarRating(ratingNumber){
