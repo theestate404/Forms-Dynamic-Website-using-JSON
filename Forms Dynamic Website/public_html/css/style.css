@@ -9,7 +9,9 @@ TO DO
     margin: 40px auto;
     border-collapse: collapse;
 }
-
+#hamburgerButton {
+    display: none;
+}
 #dataTable th,
 #dataTable td {
     border: 1px solid;
@@ -48,22 +50,39 @@ TO DO
 #cardsContainer {
     display: none;
 }
-
+#infoModal
+{
+    width: 50%;
+}
 /*------------MOBILE PHONES------------*/
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 786px) {
     
-    #databaseTable {
-        display: none;   /* hides the table area */
+    #hamburgerButton {
+        display: block;
+        font-size: 24px;
+        background: none;
+        border: none;
+    }
+    #navMenu {
+        display: none;
+        flex-direction: column;
+        margin-top: 10px;
     }
 
-    #cardsContainer {
+    #navMenu.show {
+        display: flex;
+    }
+    #databaseTable {
         display: flex;
         flex-direction: column;
         gap: 12px;
         width: 90%;
         margin: 20px auto;
     }
-
+    #infoModal
+    {
+        width: 80%;
+    }
     .card {
         border: 1px solid #ccc;
         border-radius: 10px;

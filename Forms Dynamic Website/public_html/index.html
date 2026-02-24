@@ -11,31 +11,56 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <link href="css/style.css" rel="stylesheet" type="text/css"/>
         <script src = "javascript/tag_manager.js"></script>
         <script src = "javascript/fetch_goals.js"></script>
-        <script src = "javascript/modals_logic.js"></script>
-        <script src = "javascript/cards_logic.js"></script>
-        
+        <script src = "javascript/menu_logic.js"></script>
+        <!--<script src = "javascript/cards_logic.js"></script>-->
+
     </head>
     <body>
+        
+        <button id="hamburgerButton" onclick="toggleMenu()">☰</button>
+        
+        <div id = "navMenu">
+            <button onclick = "openDatabaseTable()">Database Table</button>
+            <button onclick = "openTagManager()">Tags Manager</button>
+            <button onclick = "openAddManager()">Add Target</button>
+            <button>Modify Target</button>
+        </div>
+        
         <dialog id = "infoModal">
-                <button id = "closeInfoModal">Close</button>
-                <div id = "infoModalContent"></div>
+            <button id = "closeInfoModal">Close</button>
+            <div id = "infoModalContent"></div>
         </dialog>
-        <button id = "showAllTags" onclick = "openTagModal()">Tags Manager</button>
-        <dialog id = "tagModal">
-                <button id = "closeTagModal" onclick = "closeTagModal()">Close</button>
-                <input type = "text" id = "tagInput" placeholder = "Enter new tag">
-                <button id = "addTagButton" onclick = "addTag()">Add Tag</button>
-                <button id = "removeTagButton" onclick = "removeTag()">Remove Tag</button>
-                <button id = "modifyTagButton" onclick = "openModifyTagModal()">Modify Tag</button>
-                <dialog id = "modifyTagModal">
-                    <button id = "closeModifyTag" onclick = "closeModifyTagModal()">Close</button>
-                    <input type = "text" id = "tagToModify" placeholder = "Tag to edit">
-                    <input type = "text" id = "newModifiedTag" placeholder = "New edited tag">
-                    <button id = "submitModifyTag" onclick = "submitModifyTag()">Submit</button>
-                </dialog>
-                <div id = "tagModalContent"></div>
-        </dialog>
-        <div id= "databaseTable"></div>
-        <div id="cardsContainer"></div>
+
+        
+        <div id = "databaseTable"></div>
+        <div id = "tagManager">
+            <br>
+            <h1> Tag manager</h1>
+            <br>
+            <input type = "text" id = "tagInput" placeholder = "Enter new tag">
+            <button id = "addTagButton" onclick = "addTag()">Add Tag</button>
+            <button id = "removeTagButton" onclick = "removeTag()">Remove Tag</button>
+            <button id = "modifyTagButton" onclick = "openModifyTagModal()">Modify Tag</button>
+            <dialog id = "modifyTagModal">
+                <button id = "closeModifyTag" onclick = "closeModifyTagModal()">Close</button>
+                <input type = "text" id = "tagToModify" placeholder = "Tag to edit">
+                <input type = "text" id = "newModifiedTag" placeholder = "New edited tag">
+                <button id = "submitModifyTag" onclick = "submitModifyTag()">Submit</button>
+            </dialog>
+            <div id = "tagManagerContent"></div>
+        </div>
+        <div id = "addManager">
+            <br>
+            <h1> Add manager</h1>
+            <br>
+            <input type = "text" placeholder= "Number"><br>
+            <textarea placeholder="Description"></textarea><br>
+            <p>Examples</p><br>
+            <input type = "text" placeholder= "Title"><br>
+            <textarea placeholder="Description"></textarea><br>
+            <p>Images</p><br>
+            <input type="file" id="myfile"><br>
+            <input type = "text" placeholder= "Tags"><br>
+        </div>
     </body>
 </html>
