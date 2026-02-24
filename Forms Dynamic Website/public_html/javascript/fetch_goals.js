@@ -132,9 +132,9 @@ function displayData() {
             }
             htmlString += `
             <tr class = "target_row">
-                    <td onclick = "openInfoModal(targets[${index}])">${target.id}</td>
-                    <td onclick = "openInfoModal(targets[${index}])">${target.number}</td>
-                    <td onclick = "openInfoModal(targets[${index}])">${target.description}</td>
+                    <td onclick = "openInfoModal(goal.targets[${index}])">${target.id}</td>
+                    <td onclick = "openInfoModal(goal.targets[${index}])">${target.number}</td>
+                    <td onclick = "openInfoModal(goal.targets[${index}])">${target.description}</td>
                     <td class = "fav_cell">${heart}</td>
                     <td class = "actions_cell">  
                     <button class = "delete_btn">Delete</button> 
