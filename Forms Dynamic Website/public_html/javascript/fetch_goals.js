@@ -70,6 +70,8 @@ function displayData() {
     let htmlString = "";
     
     const isMobile = window.matchMedia("(max-width: 786px)").matches;
+    //https://stackoverflow.com/questions/53382733/how-to-get-window-width-in-javascript-to-match-the-css-media
+    //https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
     const targets = goal.targets;
     if(isMobile)
     {
