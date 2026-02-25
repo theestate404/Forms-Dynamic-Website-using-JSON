@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Database</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/style.css" rel="stylesheet" type="text/css"/>
+        <script src = "javascript/tag_manager.js"></script>
+        <script src = "javascript/fetch_goals.js"></script>
+        <script src = "javascript/modals_logic.js"></script>
+        <script src = "javascript/cards_logic.js"></script>
+        
+    </head>
+    <body>
+        <div><button id = "showAllTags" onclick = "openTagModal()">Tags Manager</button></div>
+        <dialog id = "infoModal">
+                <button id = "closeInfoModal" class="close_btn">Close</button>
+                <div id = "infoModalContent"></div>
+        </dialog>
+        <dialog id = "tagModal">
+                <button id = "closeTagModal" class="close_btn" onclick = "closeTagModal()">Close</button>
+                <input type = "text" id = "tagInput" placeholder = "Enter new tag">
+                <button id = "addTagButton" onclick = "addTag()">Add Tag</button>
+                <button id = "removeTagButton" onclick = "removeTag()">Remove Tag</button>
+                <button id = "modifyTagButton" onclick = "openModifyTagModal()">Modify Tag</button>
+                    <dialog id = "modifyTagModal">
+                        <button id = "closeModifyTag" class="close_btn" onclick = "closeModifyTagModal()">Close</button>
+                        <input type = "text" id = "tagToModify" placeholder = "Tag to edit">
+                        <input type = "text" id = "newModifiedTag" placeholder = "New edited tag">
+                        <button id = "submitModifyTag" onclick = "submitModifyTag()">Submit</button>
+                    </dialog>
+                <div id = "tagModalContent"></div>
+        </dialog>
+        <dialog id="deleteModal">
+            <h2>Delete Confirmation</h2>
+            <p id="messageDelete"></p>
+            <button id="confirmDelete" class = "delete_btn">Delete</button>
+            <button id="cancelDelete" onclick="closeDeleteConfirmationWindow()">Cancel</button>
+        </dialog>
+        <div id= "databaseTable"></div>
+        <div id="cardsContainer"></div>
+    </body>
+</html>
