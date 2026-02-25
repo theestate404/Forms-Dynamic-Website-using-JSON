@@ -9,7 +9,7 @@ let sortDirection =
 window.addEventListener("load", () => {
 
     container = document.getElementById("databaseTable");
-    let url = "un_sustainability_goal_12.json";
+    let url = "json/un_sustainability_goal_12.json";
     fetch(url)
             .then(response => response.json())
             .then(jsonData =>
@@ -26,16 +26,20 @@ window.addEventListener("load", () => {
                         example.rating_random = Math.floor(Math.random() * 6);
                     });
                 });
-                //✅ R: test one example rating in the console
-                console.log(goal.targets[0].examples[0].rating_random);
-
                 displayData();
+                const mediaQuery = window.matchMedia("(max-width: 786px)");
+                //Learned about how to change with match media https://developer.mozilla.org/en-US/docs/Web/API/MediaQueryList/change_event
+                mediaQuery.addEventListener("change", () => {
+                    displayData();
+                });
             }).catch(err =>
             {
                 console.error(err);
                 container.innerHTML = "Failed to load data";
             });
     // Had an issue where i couldnt get error handling to work but learned fetch() returns a promise and how to use .catch in : https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Async_JS/Promises#error_handling
+            document.getElementById("tagManager").style.display = "none";
+            document.getElementById("addManager").style.display = "none";
 });
 /*-----------Sort targets by description or number and re-build table-----------*/
 function handleSort(column)
@@ -61,60 +65,100 @@ function handleSort(column)
     displayData();
 }
 /*-------------------Render goal info and table rows-------------------*/
+            /*----------------Starts with table creation----------------*/
 function displayData() {
 
-//Data table display (What's seen on the webpage)
-    let htmlString = `
-        
-        <h1>Goal ${goal.number}</h1>
-        <h2>${goal.title}</h2>
-        <p>${goal.description}</p>
-        <br>
-    <table id = "dataTable">
-        <tr>
-            <th onClick = handleSort("number")>Target ${sortDirection[`number`] === "ascending" ? "&#8593" : "&#8595"}</th>
-            <th onClick = handleSort("description")>Description ${sortDirection[`description`] === "ascending" ? "&#8593" : "&#8595"}</th>
-            
-            <th id = "sortFavourite">Favourite</th>
-            <th>Actions</th>
-    </tr>
-        `;
-    // Adds the table rows for each target
-    goal.targets.forEach((target, index) =>
+
+    let htmlString = "";
+    
+    const isMobile = window.matchMedia("(max-width: 786px)").matches;
+    //https://stackoverflow.com/questions/53382733/how-to-get-window-width-in-javascript-to-match-the-css-media
+    //https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
+    const targets = goal.targets;
+    if(isMobile)
     {
-        const targetIsFavourite = target.examples.some(example => example.isFavourite); //Some: at least one item is true
-       //R Filled heart : empty heart
-        let heart;
-        if (targetIsFavourite){
-            heart = "&#10084;";
-        }else{
-            heart = "&#9825;";
-        }
-        htmlString += `
-        <tr class = "target_row">
-                <td onClick = "openInfoModal(goal.targets[${index}])">${target.number}</td>
-                <td onClick = "openInfoModal(goal.targets[${index}])">${target.description}</td>
-                <td class = "fav_cell">${heart}</td>
-                <td class = "actions_cell">
-                <button class = "edit_btn">Edit</button>    
-                <button class = "delete_btn">Delete</button> 
-                </td>
+        
+
+                //TOP SECTION
+                htmlString = `
+                    <h1>Goal ${goal.number}</h1>
+                    <h2>${goal.title}</h2>
+                    <p>${goal.description}</p>`;
+        
+                targets.forEach((target, index) => {
+                    htmlString += `
+                    <div class = "card" onClick = "openInfoModal(goal.targets[${index}])">
+                        <h3>Target ${target.number}</h3>
+                        <p>${target.description}</p>
+                    </div>`;
+                    
+                });
+                // Link section
+                htmlString += `
+                <hr>
+                <h3>Links</h3>
+                <a href = "${goal.links.official}">${goal.links.official}</a>
+                <br>
+                <a href = "${goal.links.undp}">${goal.links.undp}</a>
+                `;
+    }
+    //Data table display (What's seen on the webpage)
+    else
+    {
+        htmlString = `
+            <h1>Goal ${goal.number}</h1>
+            <h2>${goal.title}</h2>
+            <p>${goal.description}</p>
+            <br>
+        <table id = "dataTable">
+            <tr>
+                <th onclick = handleSort("id")>ID ${sortDirection[`id`] === "ascending" ? "&#8593" : "&#8595"}</th>
+                <th onclick = handleSort("number")>Target ${sortDirection[`number`] === "ascending" ? "&#8593" : "&#8595"}</th>
+                <th onclick = handleSort("description")>Description ${sortDirection[`description`] === "ascending" ? "&#8593" : "&#8595"}</th>
+                <th id = "sortFavourite">Favourite</th>
+                <th>Actions</th>
         </tr>
             `;
+        // Adds the table rows for each target
+        goal.targets.forEach((target, index) =>
+        {
+            const targetIsFavourite = target.examples.some(example => example.isFavourite); //Some: at least one item is true
+           //R Filled heart : empty heart
+            let heart;
+            if (targetIsFavourite){
+                heart = "&#10084;";
+            }else{
+                heart = "&#9825;";
+            }
+            htmlString += `
+            <tr class = "target_row">
+                    <td onclick = "openInfoModal(goal.targets[${index}])">${target.id}</td>
+                    <td onclick = "openInfoModal(goal.targets[${index}])">${target.number}</td>
+                    <td onclick = "openInfoModal(goal.targets[${index}])">${target.description}</td>
+                    <td class = "fav_cell">${heart}</td>
+                    <td class = "actions_cell">  
+                    <button class = "delete_btn">Delete</button> 
+                    </td>
+            </tr>
+                `;
 
-    });
-    htmlString += `</table>`;
+        });
+        htmlString += `</table>`;
 
-    // Link section
-    htmlString += `
-        <hr>
-        <h3>Links</h3>
-        <a href = "${goal.links.official}">${goal.links.official}</a>
-        <br>
-        <a href = "${goal.links.undp}">${goal.links.undp}</a>
-        `;
+        // Link section
+        htmlString += `
+            <hr>
+            <h3>Links</h3>
+            <a href = "${goal.links.official}">${goal.links.official}</a>
+            <br>
+            <a href = "${goal.links.undp}">${goal.links.undp}</a>
+            `;       
+    }
     container.innerHTML = htmlString;
 }
+
+
+
 /*---------------0–5 star rating string---------------*/
 function builtStarRating(ratingNumber){
     let stars = "";
@@ -131,25 +175,24 @@ function builtStarRating(ratingNumber){
 function displayInfoModal(target)
 {
     const content = document.getElementById("infoModalContent");
-
     let html = `<h2>Target ${target.number}</h2>`;
 
     target.examples.forEach(example => {
         const favourite = example.isFavourite ? "<span>&#10084</span> Favourited" : "<span>&#9825</span>";
 
         html += `
-            <h4>${example.title}<span>  ${favourite}</span></h4>
-            <p>${example.description}</p>
+            <div><h4>${example.title}<span>  ${favourite}</span></h4></div>
+            <div><p>${example.description}</p></div>
         `;
         //rating display
         html +=`
-        <p class = "rating_stars_display">${builtStarRating(example.rating_random)}</p>
+        <div><p class = "rating_stars_display">${builtStarRating(example.rating_random)}</p></div>
         `;
         example.images.forEach(img => {
-            html += `<img src="${img}" width="200">`;
+            html += `<div><img src="${img}" width="200"></div>`;
         });
 
-        html += `<p>Tags: ${example.tags.join(", ")}</p>`;
+        html += `<div><p>Tags: ${example.tags.join(", ")}</p></div>`;
     });
     //learned about .join for arrays from: https://www.w3schools.com/jsref/jsref_join.asp
     content.innerHTML = html;

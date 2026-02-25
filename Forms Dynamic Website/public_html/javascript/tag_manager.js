@@ -17,6 +17,21 @@ function getTags()
     sortedTags = [...uniqueTags].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
     // Sorting case insensitivehttps://stackoverflow.com/questions/8996963/how-to-perform-case-insensitive-sorting-array-of-string-in-javascript
 }
+function renderTags()
+{
+    getTags(); // rebuilds sortedTags from actual data
+
+    const container = document.getElementById('tagManagerContent');
+    container.innerHTML = "";
+
+    // Merge sortedTags with pendingTags for display
+    const displayTags = [...new Set([...sortedTags, ...pendingTags])]
+        .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
+    displayTags.forEach(tag => {
+        container.innerHTML += `<span class="tag">${tag}</span>`;
+    });
+}
 function addTag()
 {
     let newTag = document.getElementById("tagInput").value;
@@ -24,12 +39,11 @@ function addTag()
         {
             return;
         }
-        if (!pendingTags.includes(newTag) && !uniqueTags.includes(newTag)) {
+        if (!pendingTags.includes(newTag) && !uniqueTags.includes(newTag))
+        {
             pendingTags.push(newTag);
         }
-        getTags(); //Rebuilds unique and sorted arrays
-        sortedTags.push(newTag);
-        openTagModal(); // Reopens the modal to show change
+        renderTags(); // Reopens the modal to show change
 }
 /*------------Remove Tag---------------*/
 function removeTag()
@@ -43,8 +57,8 @@ function removeTag()
         uniqueTags = uniqueTags.filter(t => t.toLowerCase() !== tagToRemove.toLowerCase()); // Remove
         pendingTags = pendingTags.filter(t => t.toLowerCase() !== tagToRemove.toLowerCase());
         sortedTags = [...uniqueTags].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
-        openTagModal(); // Reopen modal to show change
-        displayData(); // Updates the display without the tag removed
+        displayData(); // Updates the display with the tag removed
+        renderTags();
 }
 /*----------------Removes Tag from each example if it is there--------------------- */
 function removeTagEverywhere(tagToRemove) 
@@ -83,12 +97,13 @@ function modifyTag()
             }
         });
     });
-    for (let i = 0; i < pendingTags.length; i++) {
-    if (pendingTags[i] === oldTag) {
-        pendingTags[i] = newTag;
-    }
-}
-    
+    for (let i = 0; i < pendingTags.length; i++) 
+    {
+        if (pendingTags[i] === oldTag) 
+        {
+            pendingTags[i] = newTag;
+        }
+    }  
     if(foundTag)
     {
         console.log("Tag modified");
@@ -103,6 +118,6 @@ function modifyTag()
 function submitModifyTag()
 {
     modifyTag(); // Modify tag in all examples
-    openTagModal(); // Reopens tag modal 
     closeModifyTagModal();//Closes the modify modal
+    renderTags();
 }

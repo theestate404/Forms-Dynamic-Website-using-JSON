@@ -1,31 +1,78 @@
-/*
-TO DO
 
-- Imgs on fetch_goals.js
-*/
-/*------------Dashboard Database------------*/
+/*------------General HTML------------*/
+*
+{
+    box-sizing: border-box; /*consistent size, so padding and other aren't outside but shrinks things in'*/
+}
+body{
+   margin: 0;
+   padding: 0px;
+   font-family: sans-serif;
+   background: #f5f5f5;
+   color: #414042;
+}
+button{
+   padding: 8px 12px;
+   margin-right: 8px;
+   border: 1px solid #cfd6dd;
+   background: white;
+   border-radius: 6px;
+}
+button:hover{
+    background: #f1f3f5;
+}
+h1{
+    color: #074e63;
+     font-size: 30px;
+}
+h2{
+    color: #036c82;
+     font-size: 20px;
+}
+p{
+    line-height: 1.5;
+}
+/*------------Database Table------------*/
+.close_btn{
+    background-color: #006C83;
+    color: white;
+}
+.close_btn:hover{
+    background-color: #018eaa;
+}
+#databaseTable{ /*This is the div where the table is*/
+    background: white;
+    padding: 20px;
+    border: 1px;
+    boder-radius: 10px;
+    padding: 20px;
+    margin: 30px 30px;
+}
 #dataTable {
     width: 80%;
     margin: 40px auto;
     border-collapse: collapse;
 }
-
+#dataTable th {
+    background-color: #006C83;
+    color: white;
+}
 #dataTable th,
 #dataTable td {
     border: 1px solid;
     padding: 10px;
     text-align: left;
 }
+.delete_btn{
+    background-color: #C44D46;
+    color: white;
+}
+.delete_btn:hover{
+    background-color: #e25851;
+}
 .fav_cell{
     text-align: center; /*GENERAL note: centering of heart icon not working*/
     font-size: 18px;
-    justify-content: center;
-}
-.actions_cell button{
-    margin-right: 6px; /*space between buttons*/
-    margin-bottom: 6px;
-    padding: 6px 10px; /*6px top/bottom   10px left/right*/
-    
 }
 /*------------Tags Manager window------------*/
 .tag
@@ -36,34 +83,42 @@ TO DO
     margin: 3px;
     border-radius: 8px;
 }
-#dataTable th {
-    background-color: grey;
-}
 /*------------Examples description window------------*/
 .rating_stars_display{
     font-size: 18px; 
 }
-
-/*------------HIDE THE CARDS CONTAINER WHEN DESKTOP MODE------------*/
-#cardsContainer {
+#hamburgerButton {
     display: none;
 }
-
 /*------------MOBILE PHONES------------*/
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 786px) {
     
-    #databaseTable {
-        display: none;   /* hides the table area */
+    #hamburgerButton {
+        display: block;
+        font-size: 24px;
+        background: none;
+        border: none;
+    }
+    #navMenu {
+        display: none;
+        flex-direction: column;
+        margin-top: 10px;
     }
 
-    #cardsContainer {
+    #navMenu.show {
+        display: flex;
+    }
+    #databaseTable {
         display: flex;
         flex-direction: column;
         gap: 12px;
         width: 90%;
         margin: 20px auto;
     }
-
+    #infoModal
+    {
+        width: 80%;
+    }
     .card {
         border: 1px solid #ccc;
         border-radius: 10px;
