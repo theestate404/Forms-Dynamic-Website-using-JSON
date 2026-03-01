@@ -1,5 +1,6 @@
 //Global varibles
 let goal = null, container = null;
+let uniqueId = null; //fix the error
 let sortDirection = 
 {
      number: "ascending",
@@ -15,6 +16,10 @@ window.addEventListener("load", () => {
             .then(jsonData =>
             {
                 goal = jsonData.goal;
+                
+                //------Fix problen with unique Id--------//
+                uniqueId = goal.targets.length;
+                //------Fix problen with unique Id--------//
 
                 /**/
                 goal.targets.forEach(target => {
@@ -88,9 +93,19 @@ function displayData() {
                 targets.forEach((target, index) => {
                     htmlString += `
                     <div class = "card" onClick = "openInfoModal(goal.targets[${index}])">
+
+                        <button id="BtnInsideCard" onClick="event.stopPropagation(); toggleCardMenu(${index})">▾</button>
+                        
+                        <div class="cardMenu" id="cardMenu${index}">
+                            <button onclick="editTarget(${index})">Edit</button>
+                            <button onclick="deleteTarget(${index})">Delete</button>
+                        </div>
+                        
                         <h3>Target ${target.number}</h3>
                         <p>${target.description}</p>
-                    </div>`;
+                        
+                    </div>`
+            //onclick="event.stopPropagation(); will stop the openInforModal
                     
                 });
                 // Link section
@@ -198,4 +213,30 @@ function displayInfoModal(target)
     content.innerHTML = html;
 
     document.getElementById("closeInfoModal").onclick = closeInfoModal;
+}
+
+//ADD Target to the talbe
+function addTarget()
+{
+    let number = document.getElementById("targetNumber").value
+    let description = document.getElementById("targetDescription").value
+    //let tagsInput = document.getElementById("targetTags").value
+    //let images = document.getElementById('targetImages').value
+    
+    let newTarget = {
+                     id: uniqueId, 
+                     number: number, 
+                     description: description, 
+                     //images: images, 
+                     //examples: [] //this is the tags on JSON
+                    }
+                    
+    goal.targets.push(newTarget)
+    
+    uniqueId++
+    displayData()
+    
+//to show the table with added test
+    openDatabaseTable()
+    
 }

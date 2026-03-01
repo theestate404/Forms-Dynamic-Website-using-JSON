@@ -99,16 +99,26 @@ p{
         background: none;
         border: none;
     }
-    #navMenu {
+    #navMenu 
+    {
         display: none;
         flex-direction: column;
         margin-top: 10px;
     }
-
-    #navMenu.show {
+    
+    #navMenu button 
+    {
+        width: 50%;
+        margin: 0 auto;
+    }
+    
+    #navMenu.show 
+    {
         display: flex;
     }
-    #databaseTable {
+    
+    #databaseTable 
+    {
         display: flex;
         flex-direction: column;
         gap: 12px;
@@ -119,10 +129,76 @@ p{
     {
         width: 80%;
     }
-    .card {
+    .card 
+    {
         border: 1px solid #ccc;
         border-radius: 10px;
         padding: 12px;
         background: white;
     }
+    
 }
+
+/*DELETE*/
+
+.page 
+{
+    display: none;
+    padding: 16px;
+    max-width: 600px;
+    margin: auto;
+}
+
+.page h2 
+{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.card 
+{
+    position: relative; /*fix the botton to the right side*/
+    
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+label 
+{
+    display: block;
+    margin-top: 12px;
+    font-weight: 600;
+}
+
+input,textarea 
+{
+    width: 100%;
+    margin-top: 6px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;}
+
+/*the botton of the card*/
+
+#BtnInsideCard 
+{
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+.cardMenu
+{
+    position: absolute;
+    display: none;
+    top: 40px;
+    right: 8px;
+}
+
+/*The .show will be selected and display the bottons*/
+.cardMenu.show{ display: block; }
+
+
