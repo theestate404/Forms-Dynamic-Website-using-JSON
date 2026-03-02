@@ -90,6 +90,10 @@ p{
 #hamburgerButton {
     display: none;
 }
+/*------------Confirmation Window------------*/
+.boldHighlight{
+    font-weight: bold;
+}
 /*------------MOBILE PHONES------------*/
 @media screen and (max-width: 786px) {
     
@@ -104,10 +108,16 @@ p{
         flex-direction: column;
         margin-top: 10px;
     }
-
+    
+    #navMenu button {
+        width: 50%;
+        margin: 0 auto;
+    }
+    
     #navMenu.show {
         display: flex;
     }
+    
     #databaseTable {
         display: flex;
         flex-direction: column;
@@ -125,4 +135,43 @@ p{
         padding: 12px;
         background: white;
     }
+    
 }
+
+/*DELETE*/
+
+.page {
+    display: none;
+    padding: 16px;
+    max-width: 600px;
+    margin: auto;
+}
+
+.page h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+label {
+    display: block;
+    margin-top: 12px;
+    font-weight: 600;
+}
+
+input,textarea {
+    width: 100%;
+    margin-top: 6px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;}
+
+
+

@@ -12,60 +12,73 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <script src = "javascript/tag_manager.js"></script>
         <script src = "javascript/fetch_goals.js"></script>
         <script src = "javascript/modalsAndMenu_logic.js"></script>
-        
     </head>
     <body>
-        <button id="hamburgerButton" onclick="toggleMenu()">☰</button>
+            <button id="hamburgerButton" onclick="toggleMenu()">☰</button>
         
         <div id = "navMenu">
-            <button onclick = "openDatabaseTable()">Database Table</button>
-            <button onclick = "openTagManager()">Tags Manager</button>
-            <button onclick = "openAddManager()">Add Target</button>
-            <button>Modify Target</button>
+            <button class="card" onclick = "openDatabaseTable()">Database Table</button>
+            <button class="card" onclick = "openTagManager()">Tags Manager</button>
+            <button class="card" onclick = "openAddManager()">Add Target</button>
         </div>
-        <dialog id = "infoModal">
-                <button id = "closeInfoModal" class="close_btn">Close</button>
+        <dialog id = "infoModal" class="card">
+                <button type="button" id = "closeInfoModal" class="close_btn">Close</button>
                 <div id = "infoModalContent"></div>
         </dialog>
        
         <dialog id="deleteModal">
-            <h2>Delete Confirmation</h2>
-            <p id="messageDelete"></p>
-            <button id="confirmDelete" class = "delete_btn">Delete</button>
-            <button id="cancelDelete" onclick="closeDeleteConfirmationWindow()">Cancel</button>
+            <div><h2>Delete Confirmation</h2></div>
+            <div><p id="messageDelete"></p></div>
+            <div>
+                <button id="confirmDelete" class = "delete_btn">Delete</button>
+                <button type="button" id="cancelDelete" onclick="closeDeleteConfirmationWindow()">Cancel</button>
+            </div>
         </dialog>
         <!-- Table/Cards -->
         <div id= "databaseTable"></div>
-        <!-- Tags -->
-        <div id = "tagManager">
+        <!-- _______________TAG MANAGER_______________ -->
+        <div id = "tagManager" class="page">
             <br>
-            <h1> Tag manager</h1>
-            <br>
-            <input type = "text" id = "tagInput" placeholder = "Enter new tag">
-            <button id = "addTagButton" onclick = "addTag()">Add Tag</button>
-            <button id = "removeTagButton" onclick = "removeTag()">Remove Tag</button>
-            <button id = "modifyTagButton" onclick = "openModifyTagModal()">Modify Tag</button>
-            <dialog id = "modifyTagModal">
+            <h2> Tag manager</h2>
+            <div class="card">
+                <input type = "text" id = "tagInput" placeholder = "Enter new tag">
+                <button id = "addTagButton" onclick = "addTag()">Add Tag</button>
+                <button id = "removeTagButton" onclick = "removeTag()">Remove Tag</button>
+                <button id = "modifyTagButton" onclick = "openModifyTagModal()">Modify Tag</button>
+            </div>
+            
+            <dialog id = "modifyTagModal" class="card">
                 <button id = "closeModifyTag" onclick = "closeModifyTagModal()">Close</button>
                 <input type = "text" id = "tagToModify" placeholder = "Tag to edit">
                 <input type = "text" id = "newModifiedTag" placeholder = "New edited tag">
                 <button id = "submitModifyTag" onclick = "submitModifyTag()">Submit</button>
             </dialog>
-            <div id = "tagManagerContent"></div>
+            <div id = "tagManagerContent" class="card"></div>
         </div>
-        <!-- Add -->
-        <div id = "addManager">
-            <br>
-            <h1> Add manager</h1>
-            <br>
-            <input type = "text" placeholder= "Number"><br>
-            <textarea placeholder="Description"></textarea><br>
-            <p>Examples</p><br>
-            <input type = "text" placeholder= "Title"><br>
-            <textarea placeholder="Description"></textarea><br>
-            <p>Images</p><br>
-            <input type="file" id="myfile"><br>
-            <input type = "text" placeholder= "Tags"><br>
+        <!-- _______________ADD TARGET_______________-->
+        <div id="addManager" class="page">
+            <h2>Add Target</h2>
+            <form id="addManagerForm">
+                <div class="card">
+                    <label>Number</label>
+                    <input type="text" id="targetNumber" placeholder="Number">
+                    <label>Description</label>
+                    <textarea id="targetDescription" placeholder="Description"></textarea>
+                </div>
+                <div class="card">
+                    <label>Images</label>
+                    <input type="file" id="targetImages" multiple>
+                </div>
+                <div class="card">
+                    <label>Tags</label>
+                    <input type="text" id="targetTags" placeholder="Tags">
+                </div>
+                <button type="submit" class="button">Submit</button>
+            </form>
         </div>
+        <!-- _______________MODIFY TARGET_______________-->
+        <div id="editTargetWindow" class="page"></div>
+        <!-- _______________MODIFY EXAMPLE_______________-->
+        <div id="editExampleWindow" class="page"></div>
     </body>
 </html>
