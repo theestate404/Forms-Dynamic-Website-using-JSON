@@ -33,6 +33,8 @@ function closeModifyTagModal()
 {
     document.getElementById("modifyTagModal").close();
 }
+
+//OPENING THE ADD TARGET
 function openAddManager()
 {
     document.getElementById("tagManager").style.display = "none";
