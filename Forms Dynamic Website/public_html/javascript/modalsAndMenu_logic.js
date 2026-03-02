@@ -29,6 +29,8 @@ function closeModifyTagModal()
 {
     document.getElementById("modifyTagModal").close();
 }
+
+//OPENING THE ADD TARGET
 function openAddManager()
 {
     document.getElementById("tagManager").style.display = "none";
@@ -47,4 +49,10 @@ function deleteConfirmationWindow()
 function closeDeleteConfirmationWindow()
 {
     document.getElementById("deleteModal").close();
+}
+
+//THE BUTTON TO OPEN MENU TO DELETE AND EDIT EACH CARD
+function toggleCardMenu(index) {
+    let menu = document.getElementById(`cardMenu${index}`);
+    menu.classList.toggle("show");
 }
