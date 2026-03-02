@@ -12,10 +12,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <script src = "javascript/tag_manager.js"></script>
         <script src = "javascript/fetch_goals.js"></script>
         <script src = "javascript/modalsAndMenu_logic.js"></script>
-        
     </head>
     <body>
-        <button id="hamburgerButton" onclick="toggleMenu()">☰</button>
+            <button id="hamburgerButton" onclick="toggleMenu()">☰</button>
         
         <div id = "navMenu">
             <button class="card" onclick = "openDatabaseTable()">Database Table</button>
@@ -23,20 +22,23 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <button class="card" onclick = "openAddManager()">Add Target</button>
         </div>
         <dialog id = "infoModal" class="card">
-                <button id = "closeInfoModal" class="close_btn">Close</button>
+                <button type="button" id = "closeInfoModal" class="close_btn">Close</button>
                 <div id = "infoModalContent"></div>
         </dialog>
        
         <dialog id="deleteModal">
-            <h2>Delete Confirmation</h2>
-            <p id="messageDelete"></p>
-            <button id="confirmDelete" class = "delete_btn">Delete</button>
-            <button id="cancelDelete" onclick="closeDeleteConfirmationWindow()">Cancel</button>
+            <div><h2>Delete Confirmation</h2></div>
+            <div><p id="messageDelete"></p></div>
+            <div>
+                <button id="confirmDelete" class = "delete_btn">Delete</button>
+                <button type="button" id="cancelDelete" onclick="closeDeleteConfirmationWindow()">Cancel</button>
+            </div>
         </dialog>
         <!-- Table/Cards -->
-        <div id= "databaseTable" class="card"></div>
+        <div id= "databaseTable"></div>
         <!-- _______________TAG MANAGER_______________ -->
         <div id = "tagManager" class="page">
+            <br>
             <h2> Tag manager</h2>
             <div class="card">
                 <input type = "text" id = "tagInput" placeholder = "Enter new tag">
@@ -58,17 +60,25 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <h2>Add Target</h2>
             <form id="addManagerForm">
                 <div class="card">
-                    <label>Number</label><input type="text" id="targetNumber" placeholder="Number">
-                    <label>Description</label><textarea id="targetDescription" placeholder="Description"></textarea>
+                    <label>Number</label>
+                    <input type="text" id="targetNumber" placeholder="Number">
+                    <label>Description</label>
+                    <textarea id="targetDescription" placeholder="Description"></textarea>
                 </div>
                 <div class="card">
-                    <label>Images</label><input type="file" id="targetImages" multiple>
+                    <label>Images</label>
+                    <input type="file" id="targetImages" multiple>
                 </div>
                 <div class="card">
-                    <label>Tags</label><input type="text" id="targetTags" placeholder="Tags">
+                    <label>Tags</label>
+                    <input type="text" id="targetTags" placeholder="Tags">
                 </div>
-                <input type="button" value="submit" class="button" onclick="addTarget()">
+                <button type="submit" class="button">Submit</button>
             </form>
         </div>
+        <!-- _______________MODIFY TARGET_______________-->
+        <div id="editTargetWindow" class="page"></div>
+        <!-- _______________MODIFY EXAMPLE_______________-->
+        <div id="editExampleWindow" class="page"></div>
     </body>
 </html>

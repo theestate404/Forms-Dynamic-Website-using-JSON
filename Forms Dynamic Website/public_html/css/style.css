@@ -96,6 +96,10 @@ p{
 #hamburgerButton {
     display: none;
 }
+/*------------Confirmation Window------------*/
+.boldHighlight{
+    font-weight: bold;
+}
 /*------------MOBILE PHONES------------*/
 @media screen and (max-width: 786px) {
     
@@ -112,8 +116,7 @@ p{
         margin-top: 10px;
     }
     
-    #navMenu button 
-    {
+    #navMenu button {
         width: 50%;
         margin: 0 auto;
     }
