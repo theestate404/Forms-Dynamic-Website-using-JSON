@@ -1,6 +1,5 @@
 //Global varibles
 let goal = null, container = null;
-let uniqueId = null; //fix the error
 let sortDirection = 
 {
      number: "ascending",
@@ -16,10 +15,6 @@ window.addEventListener("load", () => {
             .then(jsonData =>
             {
                 goal = jsonData.goal;
-                
-                //------Fix problen with unique Id--------//
-                uniqueId = goal.targets.length;
-                //------Fix problen with unique Id--------//
 
                 /**/
                 goal.targets.forEach(target => {
@@ -45,7 +40,6 @@ window.addEventListener("load", () => {
     // Had an issue where i couldnt get error handling to work but learned fetch() returns a promise and how to use .catch in : https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Async_JS/Promises#error_handling
             document.getElementById("tagManager").style.display = "none";
             document.getElementById("addManager").style.display = "none";
-            document.getElementById("displayEditTarget").style.display = "none";
 });
 /*-----------Sort targets by description or number and re-build table-----------*/
 function handleSort(column)
@@ -83,6 +77,8 @@ function displayData() {
     const targets = goal.targets;
     if(isMobile)
     {
+        
+
                 //TOP SECTION
                 htmlString = `
                     <h1>Goal ${goal.number}</h1>
@@ -92,19 +88,9 @@ function displayData() {
                 targets.forEach((target, index) => {
                     htmlString += `
                     <div class = "card" onClick = "openInfoModal(goal.targets[${index}])">
-
-                        <button id="BtnInsideCard" onClick="event.stopPropagation(); toggleCardMenu(${index})">▾</button>
-                        
-                        <div class="cardMenu" id="cardMenu${index}">
-                            <button onclick="editTarget(${index})">Edit</button>
-                            <button onclick="deleteTarget(${index})">Delete</button>
-                        </div>
-                        
                         <h3>Target ${target.number}</h3>
                         <p>${target.description}</p>
-                        
-                    </div>`
-            //onclick="event.stopPropagation(); will stop the openInforModal
+                    </div>`;
                     
                 });
                 // Link section
@@ -119,7 +105,6 @@ function displayData() {
     //Data table display (What's seen on the webpage)
     else
     {
-        /*----------------Starts with table creation----------------*/
         htmlString = `
             <h1>Goal ${goal.number}</h1>
             <h2>${goal.title}</h2>
@@ -146,14 +131,13 @@ function displayData() {
                 heart = "&#9825;";
             }
             htmlString += `
-            <tr class = "target_row ">
+            <tr class = "target_row">
                     <td onclick = "openInfoModal(goal.targets[${index}])">${target.id}</td>
                     <td onclick = "openInfoModal(goal.targets[${index}])">${target.number}</td>
                     <td onclick = "openInfoModal(goal.targets[${index}])">${target.description}</td>
                     <td class = "fav_cell">${heart}</td>
-                    <td class = "actions_cell">
-                    <button type="button" class = "edit_btn" onclick="displayEditTarget(${target.id},${target.number},'${target.description}')">Edit</button>
-                    <button type="button" class = "delete_btn" onclick="deleteConfirmationWindow(${target.number})">Delete</button> 
+                    <td class = "actions_cell">  
+                    <button class = "delete_btn">Delete</button> 
                     </td>
             </tr>
                 `;
@@ -165,14 +149,15 @@ function displayData() {
         htmlString += `
             <hr>
             <h3>Links</h3>
-            <a href = "${goal.links.official}" target="_blank">${goal.links.official}</a>
+            <a href = "${goal.links.official}">${goal.links.official}</a>
             <br>
-            <a href = "${goal.links.undp}" target="_blank">${goal.links.undp}</a>
+            <a href = "${goal.links.undp}">${goal.links.undp}</a>
             `;       
     }
     container.innerHTML = htmlString;
 }
-                    /*-------------------^ End of table ^-------------------*/
+
+
 
 /*---------------0–5 star rating string---------------*/
 function builtStarRating(ratingNumber){
@@ -196,7 +181,7 @@ function displayInfoModal(target)
         const favourite = example.isFavourite ? "<span>&#10084</span> Favourited" : "<span>&#9825</span>";
 
         html += `
-            <div><h4>${example.title}<span>${favourite}</span></h4></div>
+            <div><h4>${example.title}<span>  ${favourite}</span></h4></div>
             <div><p>${example.description}</p></div>
         `;
         //rating display
@@ -207,38 +192,10 @@ function displayInfoModal(target)
             html += `<div><img src="${img}" width="200"></div>`;
         });
 
-        html += `<div><p>Tags: ${example.tags.join(", ")}</p></div><span><button type="button" class = "edit_btn" onclick = "displayEditExample('${example.title}','${example.description}','${example.images}','${example.tags}','${builtStarRating(example.rating_random)}','${favourite}')">Edit</button></span>`;
+        html += `<div><p>Tags: ${example.tags.join(", ")}</p></div><`
     });
     //learned about .join for arrays from: https://www.w3schools.com/jsref/jsref_join.asp
     content.innerHTML = html;
 
     document.getElementById("closeInfoModal").onclick = closeInfoModal;
-}
-
-//ADD Target to the talbe
-function addTarget()
-{
-    let number = document.getElementById("targetNumber").value
-    let description = document.getElementById("targetDescription").value
-    //let tagsInput = document.getElementById("targetTags").value
-    let images = document.getElementById('targetImages').value
-    
-    uniqueId++
-    
-    let newTarget = {
-                     id: uniqueId, 
-                     number: number, 
-                     description: description, 
-                     images: images, 
-                     examples: [] //this is the tags on JSON
-                    }
-                    
-    goal.targets.push(newTarget)
-    
-    
-    displayData()
-    
-//to show the table with added test
-    openDatabaseTable()
-    
 }
