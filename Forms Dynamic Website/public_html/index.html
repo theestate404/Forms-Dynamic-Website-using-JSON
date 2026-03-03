@@ -41,7 +41,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <br>
             <h2> Tag manager</h2>
             <div class="card">
-                <input type = "text" id = "tagInput" placeholder = "Enter new tag">
+                <input type = "text" id = "tagInput" placeholder = "Enter new tag" oninput="removeWarning()">
+                    <p id = "tagInput_error" class = "error"></p>
                 <button id = "addTagButton" onclick = "addTag()">Add Tag</button>
                 <button id = "removeTagButton" onclick = "removeTag()">Remove Tag</button>
                 <button id = "modifyTagButton" onclick = "openModifyTagModal()">Modify Tag</button>
@@ -50,6 +51,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <dialog id = "modifyTagModal" class="card">
                 <button id = "closeModifyTag" onclick = "closeModifyTagModal()">Close</button>
                 <input type = "text" id = "tagToModify" placeholder = "Tag to edit">
+                    <p id = "tagToModify_error" class = "error"></p>
                 <input type = "text" id = "newModifiedTag" placeholder = "New edited tag">
                 <button id = "submitModifyTag" onclick = "submitModifyTag()">Submit</button>
             </dialog>

@@ -142,15 +142,39 @@ function displayData() {
             let heart;
             if (targetIsFavourite){
                 heart = "&#10084;";
-            }else{
+            }
+            else
+            {
                 heart = "&#9825;";
+            }
+            let favouritedExamples = "";
+            let hasFavourites = false;
+            for (let i = 0; i < target.examples.length; i++) {
+                if (target.examples[i].isFavourite) {
+
+                    // Open <ul> only once
+                    if (!hasFavourites) {
+                        favouritedExamples = "<ul>";
+                        hasFavourites = true;
+                    }
+
+                    favouritedExamples += "<li>" + target.examples[i].title + "</li>";
+                }
+            }
+            //Close </ul> only if opened
+            if (hasFavourites) {
+                favouritedExamples += "</ul>";
+            } else {
+                favouritedExamples = "No Favourites";
             }
             htmlString += `
             <tr class = "target_row ">
                     <td onclick = "openInfoModal(goal.targets[${index}])">${target.id}</td>
                     <td onclick = "openInfoModal(goal.targets[${index}])">${target.number}</td>
                     <td onclick = "openInfoModal(goal.targets[${index}])">${target.description}</td>
-                    <td class = "fav_cell">${heart}</td>
+                    <td class = "fav_cell">${heart}
+                        <div class = "fav_tooltip">${favouritedExamples}</div>
+                    </td>
                     <td class = "actions_cell">
                     <button type="button" class = "edit_btn" onclick="displayEditTarget(${target.id},${target.number},'${target.description}')">Edit</button>
                     <button type="button" class = "delete_btn" onclick="deleteConfirmationWindow(${target.number})">Delete</button> 
