@@ -16,11 +16,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     <body>
             <button id="hamburgerButton" onclick="toggleMenu()">☰</button>
         
-        <div id = "navMenu">
+        <nav id = "navMenu">
+            <h1>UN SDG - Dashboard</h1>
+            <div id="navButtons">
             <button class="card" onclick = "openDatabaseTable()">Database Table</button>
             <button class="card" onclick = "openTagManager()">Tags Manager</button>
             <button class="card" onclick = "openAddManager()">Add Target</button>
-        </div>
+            </div>
+        </nav>
         <dialog id = "infoModal" class="card">
                 <button type="button" id = "closeInfoModal" class="close_btn">Close</button>
                 <div id = "infoModalContent"></div>
