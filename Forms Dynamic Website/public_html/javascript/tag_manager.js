@@ -1,4 +1,5 @@
 let uniqueTags = [], sortedTags = [], pendingTags = [], displayTags = [], inputTag = null, tagError = "";
+
 /*-------------Tags are collected from JSON and sorted -----------------*/
 function getTags()
 {
@@ -62,7 +63,7 @@ function removeTag()
         return;
     }
     const tagExists = displayTags.some(tag => tag === tagToRemove);
-    // Wanted to find if an object was in an array https://stackoverflow.com/questions/237104/how-do-i-check-if-an-array-includes-a-value-in-javascript?utm_source=chatgpt.com
+    // Wanted to find if an object was in an array https://stackoverflow.com/questions/237104/how-do-i-check-if-an-array-includes-a-value-in-javascript
     
     if (!tagExists)
     {

@@ -12,16 +12,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <script src = "javascript/tag_manager.js"></script>
         <script src = "javascript/fetch_goals.js"></script>
         <script src = "javascript/modalsAndMenu_logic.js"></script>
-        <script src = "javascript/modify.js"></script>
     </head>
     <body>
             <button id="hamburgerButton" onclick="toggleMenu()">☰</button>
         
-        <div id = "navMenu">
+        <nav id = "navMenu">
+            <h1>UN SDG - Dashboard</h1>
+            <div id="navButtons">
             <button class="card" onclick = "openDatabaseTable()">Database Table</button>
             <button class="card" onclick = "openTagManager()">Tags Manager</button>
             <button class="card" onclick = "openAddManager()">Add Target</button>
-        </div>
+            </div>
+        </nav>
         <dialog id = "infoModal" class="card">
                 <button type="button" id = "closeInfoModal" class="close_btn">Close</button>
                 <div id = "infoModalContent"></div>
@@ -80,8 +82,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             </form>
         </div>
         <!-- _______________MODIFY TARGET_______________-->
-        <div id="editTargetWindow" class="page">
-        </div>
-        
+        <div id="editTargetWindow" class="page"></div>
+        <!-- _______________MODIFY EXAMPLE_______________-->
+        <div id="editExampleWindow" class="page"></div>
     </body>
 </html>
