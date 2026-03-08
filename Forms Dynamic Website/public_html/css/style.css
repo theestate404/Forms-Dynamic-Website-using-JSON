@@ -342,12 +342,17 @@ input,textarea
     transform: scaleX(1);
     opacity: 1;
 }
-//---------Modify---------
-.card label {
-  display: inline-flex; // prevents large line breaks
-  align-items: center;
-  gap: 4px; // spacing between radio button and number
-  margin-bottom: 0; // remove default bottom margin
+/*---------Modify---------*/
+.card label
+{
+    display: inline-flex; // prevents large line breaks
+    align-items: center;
+    gap: 4px; // spacing between radio button and number
+    margin-bottom: 0; // remove default bottom margin
+}
+.previewImage
+{
+    width: 100%;
 }
 
 

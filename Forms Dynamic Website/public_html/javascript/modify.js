@@ -10,7 +10,6 @@ function displayEditTarget(target) {
             <form id = "editForm">
                 <div class= "card">
                     <label>Number</label>
-                    <input type="text" id="modifyTargetNumber" value="${target.number}"placeholder="Number">
                     <input type="text" id="modifyTargetNumber" value="${target.number}" placeholder="Number">
                     <label>Description</label>
                     <textarea id="modifyTargetDescription" placeholder="Description">${target.description}</textarea>
@@ -61,12 +60,12 @@ function displayEditTarget(target) {
                 <h3>Favourite</h3>
                 <label><input type="checkbox" id="modifyExampleFavourite_${index}" ${example.isFavourite ? 'checked' : ''}> Favourite?</label><br>
                 <h3>Rating</h3>
-                <label><input type="radio" name="rating_${index}" value="0" ${example.rating_random == 0 ? "checked" : ""}> 0</label><br>
-                <label><input type="radio" name="rating_${index}" value="1" ${example.rating_random == 1 ? "checked" : ""}> 1</label><br>
-                <label><input type="radio" name="rating_${index}" value="2" ${example.rating_random == 2 ? "checked" : ""}> 2</label><br>
-                <label><input type="radio" name="rating_${index}" value="3" ${example.rating_random == 3 ? "checked" : ""}> 3</label><br>
-                <label><input type="radio" name="rating_${index}" value="4" ${example.rating_random == 4 ? "checked" : ""}> 4</label><br>
-                <label><input type="radio" name="rating_${index}" value="5" ${example.rating_random == 5 ? "checked" : ""}> 5</label><br>
+                <label><input type="radio" name="rating_${index}" value="0" ${example.rating_random === 0 ? "checked" : ""}> 0</label><br>
+                <label><input type="radio" name="rating_${index}" value="1" ${example.rating_random === 1 ? "checked" : ""}> 1</label><br>
+                <label><input type="radio" name="rating_${index}" value="2" ${example.rating_random === 2 ? "checked" : ""}> 2</label><br>
+                <label><input type="radio" name="rating_${index}" value="3" ${example.rating_random === 3 ? "checked" : ""}> 3</label><br>
+                <label><input type="radio" name="rating_${index}" value="4" ${example.rating_random === 4 ? "checked" : ""}> 4</label><br>
+                <label><input type="radio" name="rating_${index}" value="5" ${example.rating_random === 5 ? "checked" : ""}> 5</label><br>
             </div>
         `;
         // it checks if the example is favourited or not, checkbox starts checked if it is
