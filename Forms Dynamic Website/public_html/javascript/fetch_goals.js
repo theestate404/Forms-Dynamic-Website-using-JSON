@@ -214,7 +214,7 @@ function builtStarRating(ratingNumber){
 function displayInfoModal(target)
 {
     const content = document.getElementById("infoModalContent");
-    let html = `<h2>Target ${target.number}</h2>`;
+    let html = `<h2 id="exampleTarget">Target ${target.number}</h2>`;
 
     target.examples.forEach(example => {
         const favourite = example.isFavourite ? "<span>&#10084</span> Favourited" : "<span>&#9825</span>";
