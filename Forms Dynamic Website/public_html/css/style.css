@@ -1,24 +1,13 @@
-:root{
-  --primary: #0B7285;        /*✅ teal */
-  --primaryHover: #0E859C;
-    --surface: #FFFFFF;        /* ✅cards/table/modal background */
-    --border: #E2E8F0;          /*✅*/
-    /*
-    --primary:#006C83;
-    --primaryHover: #018eaa;
-    --surface:#ffffff; 
-    */
-}
 /*------------General HTML------------*/
 *
 {
     box-sizing: border-box; /*consistent size, so padding and other aren't outside but shrinks things in'*/
 }
-a{
-    text-decoration: none;
-}
-a:hover{
-    text-decoration: underline;
+.card label {
+  display: inline-flex; /* prevents large line breaks */
+  align-items: center;
+  gap: 4px; /* spacing between radio button and number */
+  margin-bottom: 0; /* remove default bottom margin */
 }
 body{
    margin: 0;
@@ -28,16 +17,14 @@ body{
    color: #414042;
 }
 button{
-   padding: 10px 14px;
+   padding: 8px 12px;
    margin-right: 8px;
    border: 1px solid #cfd6dd;
-   background: var(--surface);
-   border-radius: 10px;
-   box-shadow: #ccc 5px 5px 5px;
+   background: white;
+   border-radius: 6px;
 }
 button:hover{
-    background: #f7fbff;
-    transform: translateY(-2px);
+    background: #f1f3f5;
 }
 h1{
     color: #074e63;
@@ -47,103 +34,59 @@ h2{
     color: #036c82;
      font-size: 20px;
 }
-td:hover{
-    background: #EDFDFF;
-}
 p{
     line-height: 1.5;
 }
-input[type=text],textarea,input[type=file]{
-    border: 1px solid #afd9e4;
-}
-/*------------Nav Menu------------*/
-#navMenu{
-    display: flex; /*makes it a flex container*/
-    justify-content: space-between; /*items start from the left*/
-    align-items: center;
-    flex-wrap: nowrap;
-    background: var(--primary);
-    margin: 15px 50px;
-    padding: 10px 10px;
-    border-radius: 10px;
-}
-#navButtons{
-    gap: 10px;
-    display:flex;
-    margin-left: auto;
-    
-}
-#navMenu h1{
-    color: var(--surface);
-    margin:5px 5px;
-}
-#navMenu button{
-    color: var(--primary);
-    box-shadow:none;
-}
 /*------------Database Table------------*/
 .close_btn{
-    background-color: var(--primary);
-    color: var(--surface);
+    background-color: #006C83;
+    color: white;
 }
 .close_btn:hover{
-    background-color: var(--primaryHover);
+    background-color: #018eaa;
 }
 #databaseTable{ /*This is the div where the table is*/
-    background: var(--surface);
+    background: white;
     padding: 20px;
-    border: 1px var(--border);
-    border-radius: 12px;
-    margin: 50px 50px;
-    box-shadow: #666 10px 10px 15px;
+    margin: 30px 30px;
 }
 #dataTable {
-    background: var(--surface);
-    width: 100%;
-    max-width: 1100px;
-    margin: 20px auto;
-    border-collapse: separate;
-    border-spacing: 0 5px; /* 0px left/right gap, 10px gap between rows */
-    border: none;
-    border-radius: 12px;
-    overflow: hidden; /*if something goes outside the rounded corners it cuts it off*/
+    width: 80%;
+    margin: 40px auto;
+    border-collapse: collapse;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    overflow: hidden;
+}
+#dataTable th {
+    background-color: #006C83;
+    color: white;
 }
 
-#dataTable th {
-    background-color: var(--primary);
-    color: var(--surface);
-    border:none;
-    padding: 12px;
+.target_row, .card
+{
+    transition: 0.3s;
 }
-#dataTable th:first-child {
-    border-top-left-radius: 12px;
+.target_row:hover
+{
+    background-color: lightgray;
+    cursor: pointer;
 }
-#dataTable th:last-child{
-    border-top-right-radius: 12px;
-}
+#dataTable th,
 #dataTable td {
-    /*border: 1px solid var(--border);*/
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
     padding: 10px;
     text-align: left;
+    /*border: none;*/
+    border: 1px solid #ccc;
 }
-#dataTable td:first-child{
-    border-left: 1px solid var(--border);
-    border-top-left-radius: 12px;
-    border-bottom-left-radius: 12px;
-}
-#dataTable td:last-child{
-    border-right: 1px solid var(--border);
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
-}
-#dataTable tr:nth-child(even){
-    background: #f9fafb;
+#dataTable th.th_selectable:hover
+{
+    background-color: #015366;
+    cursor: pointer;
 }
 .delete_btn{
     background-color: #C44D46;
-    color: var(--surface);
+    color: white;
 }
 .delete_btn:hover{
     background-color: #e25851;
@@ -151,7 +94,6 @@ input[type=text],textarea,input[type=file]{
 .fav_cell{
     text-align: center; /*GENERAL note: centering of heart icon not working*/
     font-size: 18px;
-    color: #BA343A;
 }
 /*------------Tags Manager window------------*/
 .tag
@@ -162,25 +104,12 @@ input[type=text],textarea,input[type=file]{
     margin: 3px;
     border-radius: 8px;
 }
-/*------------DIALOG EXAMPLES------------*/
-dialog{
-    max-width: 800px;
-    width: 100%;
-    border:none;
-    position: relative;
+.error
+{
+    color: red;
+    font-size: 13px;
 }
-#closeInfoModal{
-    position: absolute;
-    top:15px;
-    right: 15px;
-}
-#exampleTarget{
-    background: var(--primary);
-    padding: 20px 24px;
-    border-radius: 40px;
-    color: var(--surface);
-    display: inline-block;
-}
+/*------------Examples description window------------*/
 .rating_stars_display{
     font-size: 18px; 
 }
@@ -299,7 +228,10 @@ input,textarea
 }
 
 /*The .show will be selected and display the bottons*/
-.cardMenu.show{ display: block; }
+.cardMenu.show
+{ 
+    display: block;
+}
 
 /*NAV MENU*/
 #navMenu
@@ -309,13 +241,16 @@ input,textarea
     align-items: center;
     justify-content: center;
 }
-.fav_cell {
+.fav_cell 
+{
     position: relative;
+    
     cursor: pointer;
 }
 
-.fav_tooltip {
-    display: none;
+.fav_tooltip 
+{
+    top: -1px;
     position: absolute;
     left: 100%;
     background: #fff;
@@ -323,10 +258,17 @@ input,textarea
     width: 200px;
     text-wrap: balance;
     border: 1px solid #ccc;
+    
+    transform-origin: left;
+    transform: scaleX(0);
+    opacity: 0;
+    transition: 0.5s;
 }
 
-.fav_cell:hover .fav_tooltip {
-    display: block;
+.fav_cell:hover .fav_tooltip 
+{
+    transform: scaleX(1);
+    opacity: 1;
 }
 
 

@@ -32,6 +32,8 @@ window.addEventListener("load", () => {
                     });
                 });
                 displayData();
+                getTags();
+                renderTags();
                 const mediaQuery = window.matchMedia("(max-width: 786px)");
                 //Learned about how to change with match media https://developer.mozilla.org/en-US/docs/Web/API/MediaQueryList/change_event
                 mediaQuery.addEventListener("change", () => {
@@ -127,9 +129,9 @@ function displayData() {
             <br>
         <table id = "dataTable">
             <tr>
-                <th onclick = handleSort("id")>ID ${sortDirection[`id`] === "ascending" ? "&#8593" : "&#8595"}</th>
-                <th onclick = handleSort("number")>Target ${sortDirection[`number`] === "ascending" ? "&#8593" : "&#8595"}</th>
-                <th onclick = handleSort("description")>Description ${sortDirection[`description`] === "ascending" ? "&#8593" : "&#8595"}</th>
+                <th class = "th_selectable" onclick = handleSort("id")>ID ${sortDirection[`id`] === "ascending" ? "&#8593" : "&#8595"}</th>
+                <th class = "th_selectable" onclick = handleSort("number")>Target ${sortDirection[`number`] === "ascending" ? "&#8593" : "&#8595"}</th>
+                <th class = "th_selectable" onclick = handleSort("description")>Description ${sortDirection[`description`] === "ascending" ? "&#8593" : "&#8595"}</th>
                 <th id = "sortFavourite">Favourite</th>
                 <th>Actions</th>
         </tr>
@@ -176,7 +178,7 @@ function displayData() {
                         <div class = "fav_tooltip">${favouritedExamples}</div>
                     </td>
                     <td class = "actions_cell">
-                    <button type="button" class = "edit_btn" onclick="displayEditTarget(${target.id},${target.number},'${target.description}')">Edit</button>
+                    <button type="button" class = "edit_btn" onclick="displayEditTarget(goal.targets[${index}])">Edit</button>
                     <button type="button" class = "delete_btn" onclick="deleteConfirmationWindow(${target.number})">Delete</button> 
                     </td>
             </tr>
@@ -214,7 +216,7 @@ function builtStarRating(ratingNumber){
 function displayInfoModal(target)
 {
     const content = document.getElementById("infoModalContent");
-    let html = `<h2 id="exampleTarget">Target ${target.number}</h2>`;
+    let html = `<h2>Target ${target.number}</h2>`;
 
     target.examples.forEach(example => {
         const favourite = example.isFavourite ? "<span>&#10084</span> Favourited" : "<span>&#9825</span>";
@@ -231,8 +233,9 @@ function displayInfoModal(target)
             html += `<div><img src="${img}" width="200"></div>`;
         });
 
-        html += `<div><p>Tags: ${example.tags.join(", ")}</p></div><span><button type="button" class = "edit_btn" onclick = "displayEditExample('${example.title}','${example.description}','${example.images}','${example.tags}','${builtStarRating(example.rating_random)}','${favourite}')">Edit</button></span>`;
+        html += `<div><p>Tags: ${example.tags.map(tag => `<span class = "tag">${tag}</span>`).join(" ")}</p></div><span><button type="button" class = "edit_btn" onclick = "displayEditExample('${example.title}','${example.description}','${example.images}','${example.tags}','${builtStarRating(example.rating_random)}','${favourite}')">Edit</button></span>`;
     });
+    //https://stackoverflow.com/questions/68861893/how-can-i-display-an-array-of-strings-of-an-object-as-spans-in-a-js-template-lit
     //learned about .join for arrays from: https://www.w3schools.com/jsref/jsref_join.asp
     content.innerHTML = html;
 
