@@ -20,6 +20,11 @@ a{
 a:hover{
     text-decoration: underline;
 }
+.error
+{
+    color: red;
+    font-size: 13px;
+}
 body{
    margin: 0;
    padding: 0px;
@@ -106,7 +111,6 @@ input[type=text],textarea,input[type=file]{
     border-spacing: 0 5px; /* 0px left/right gap, 10px gap between rows */
     border: none;
     border-radius: 12px;
-    overflow: hidden; /*if something goes outside the rounded corners it cuts it off*/
 }
 
 #dataTable th {
@@ -309,13 +313,16 @@ input,textarea
     align-items: center;
     justify-content: center;
 }
-.fav_cell {
+.fav_cell 
+{
     position: relative;
+    
     cursor: pointer;
 }
 
-.fav_tooltip {
-    display: none;
+.fav_tooltip 
+{
+    top: -1px;
     position: absolute;
     left: 100%;
     background: #fff;
@@ -323,10 +330,25 @@ input,textarea
     width: 200px;
     text-wrap: balance;
     border: 1px solid #ccc;
+    
+    transform-origin: left;
+    transform: scaleX(0);
+    opacity: 0;
+    transition: 0.5s;
 }
 
-.fav_cell:hover .fav_tooltip {
-    display: block;
+.fav_cell:hover .fav_tooltip 
+{
+    transform: scaleX(1);
+    opacity: 1;
 }
+//---------Modify---------
+.card label {
+  display: inline-flex; // prevents large line breaks
+  align-items: center;
+  gap: 4px; // spacing between radio button and number
+  margin-bottom: 0; // remove default bottom margin
+}
+
 
 
