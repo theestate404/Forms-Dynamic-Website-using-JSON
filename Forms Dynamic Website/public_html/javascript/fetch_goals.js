@@ -211,7 +211,7 @@ function displayInfoModal(target)
         const favourite = example.isFavourite ? "<span>&#10084</span> Favourited" : "<span>&#9825</span>";
 
         html += `
-            <div><h4>${example.title}<span>${favourite}</span></h4></div>
+            <div><h4>${example.title} <span>${favourite}</span></h4></div>
             <div><p>${example.description}</p></div>
         `;
         //rating display
