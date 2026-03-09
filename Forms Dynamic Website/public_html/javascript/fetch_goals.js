@@ -3,6 +3,7 @@ let goal = null, container = null;
 let uniqueId = null; //fix the error
 let sortDirection =
         {
+            id: "ascending",
             number: "ascending",
             description: "ascending"
         };
@@ -47,7 +48,12 @@ window.addEventListener("load", () => {
     // Had an issue where i couldnt get error handling to work but learned fetch() returns a promise and how to use .catch in : https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Async_JS/Promises#error_handling
     document.getElementById("tagManager").style.display = "none";
     document.getElementById("addManager").style.display = "none";
-    document.getElementById("displayEditTarget").style.display = "none";
+    document.getElementById("editTargetWindow").style.display = "none";
+
+    document.getElementById("addManagerForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        addTarget();
+    });
 });
 /*-----------Sort targets by description or number and re-build table-----------*/
 function handleSort(column)
@@ -55,8 +61,7 @@ function handleSort(column)
     if (sortDirection[column] === "ascending")
     {
         sortDirection[column] = "descending";
-    }
-    else
+    } else
     {
         sortDirection[column] = "ascending";
     }
@@ -64,8 +69,7 @@ function handleSort(column)
     if (sortDirection[column] === "ascending")
     {
         goal.targets.sort((a, b) => a[column] < b[column] ? -1 : 1);
-    }
-    else
+    } else
     {
         goal.targets.sort((a, b) => a[column] < b[column] ? 1 : -1);
 
@@ -74,8 +78,7 @@ function handleSort(column)
 }
 /*-------------------Render goal info and table rows-------------------*/
 /*----------------Starts with table creation----------------*/
-function displayData()
-{
+function displayData() {
 
 
     let htmlString = "";
@@ -84,13 +87,11 @@ function displayData()
     //https://stackoverflow.com/questions/53382733/how-to-get-window-width-in-javascript-to-match-the-css-media
     //https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
     const targets = goal.targets;
-    ////TOP SECTION
+    //TOP SECTION
     htmlString = `
-
         <h1>Goal ${goal.number}</h1>
         <h2>${goal.title}</h2>
-        <p>${goal.description}</p>
-        <br>`;
+        <p>${goal.description}</p>`;
     if (isMobile)
     {
         targets.forEach((target, index) => {
@@ -101,7 +102,7 @@ function displayData()
                         
                         <div class="cardMenu" id="cardMenu${index}">
                             <button onclick="editTarget(${index})">Edit</button>
-                            <button onclick="deleteTarget(${index})">Delete</button>
+                            <button class="delete_btn" onclick="deleteTarget(${index})">Delete</button>
                         </div>
                         
                         <h3>Target ${target.number}</h3>
@@ -111,14 +112,6 @@ function displayData()
             //onclick="event.stopPropagation(); will stop the openInforModal
 
         });
-        // Link section
-        htmlString += `
-                <hr>
-                <h3>Links</h3>
-                <a href = "${goal.links.official}">${goal.links.official}</a>
-                <br>
-                <a href = "${goal.links.undp}">${goal.links.undp}</a>
-                `;
     }
     //Data table display (What's seen on the webpage)
     else
@@ -140,24 +133,19 @@ function displayData()
             const targetIsFavourite = target.examples.some(example => example.isFavourite); //Some: at least one item is true
             //R Filled heart : empty heart
             let heart;
-            if (targetIsFavourite)
-            {
+            if (targetIsFavourite) {
                 heart = "&#10084;";
-            }
-            else
+            } else
             {
                 heart = "&#9825;";
             }
             let favouritedExamples = "";
             let hasFavourites = false;
-            for (let i = 0; i < target.examples.length; i++)
-            {
-                if (target.examples[i].isFavourite)
-                {
+            for (let i = 0; i < target.examples.length; i++) {
+                if (target.examples[i].isFavourite) {
 
                     // Open <ul> only once
-                    if (!hasFavourites)
-                    {
+                    if (!hasFavourites) {
                         favouritedExamples = "<ul>";
                         hasFavourites = true;
                     }
@@ -166,12 +154,9 @@ function displayData()
                 }
             }
             //Close </ul> only if opened
-            if (hasFavourites)
-            {
+            if (hasFavourites) {
                 favouritedExamples += "</ul>";
-            }
-            else
-            {
+            } else {
                 favouritedExamples = "No Favourites";
             }
             htmlString += `
@@ -193,7 +178,7 @@ function displayData()
         htmlString += `</table>`;
     }
     // Link section
-        htmlString += `
+    htmlString += `
                 <hr>
                 <h3>Links</h3>
                 <a href = "${goal.links.official}">${goal.links.official}</a>
@@ -205,16 +190,13 @@ function displayData()
 /*-------------------^ End of table ^-------------------*/
 
 /*---------------0–5 star rating string---------------*/
-function builtStarRating(ratingNumber)
-{
+function builtStarRating(ratingNumber) {
     let stars = "";
-    for (let i = 0; i < ratingNumber; i++)
-    {
+    for (let i = 0; i < ratingNumber; i++) {
         stars += "★";
     }
     //add empty stars after knowing how many full ones we already have
-    for (let i = ratingNumber; i < 5; i++)
-    {
+    for (let i = ratingNumber; i < 5; i++) {
         stars += "☆";
     }
     return stars;
@@ -229,7 +211,7 @@ function displayInfoModal(target)
         const favourite = example.isFavourite ? "<span>&#10084</span> Favourited" : "<span>&#9825</span>";
 
         html += `
-            <div><h4>${example.title} <span>${favourite}</span></h4></div>
+            <div><h4>${example.title}<span>${favourite}</span></h4></div>
             <div><p>${example.description}</p></div>
         `;
         //rating display
@@ -253,18 +235,39 @@ function displayInfoModal(target)
 function addTarget()
 {
     let number = document.getElementById("targetNumber").value
+    let title = document.getElementById("targetTitle").value
     let description = document.getElementById("targetDescription").value
-    //let tagsInput = document.getElementById("targetTags").value
-    let images = document.getElementById('targetImages').value
+    let descriptionDetail = document.getElementById("targetDescriptionDetail").value
+
+    // Convert tags string into array
+    let tagsInput = document.getElementById("targetTags").value;
+    let tagsArray = tagsInput ? tagsInput.split(",").map(tag => tag.trim()) : [];
+
+    // Convert file input into array of image names
+    let imageFiles = document.getElementById("targetImages").files;
+    let imagesArray = [];
+
+    for (let i = 0; i < imageFiles.length; i++) {
+        imagesArray.push(URL.createObjectURL(imageFiles[i]));
+    }
 
     uniqueId++
+    let accessExamples = {
+        title: title,
+        description: descriptionDetail,
+        images: imagesArray,
+        tags: tagsArray,
+        //Favourite and rating has to be false and 0, because
+        //it is a new entry.
+        isFavourite: false,
+        rating_random: 0
+    }
 
     let newTarget = {
         id: uniqueId,
         number: number,
         description: description,
-        images: images,
-        examples: [] //this is the tags on JSON
+        examples: [accessExamples] //this is the tags on JSON
     }
 
     goal.targets.push(newTarget)

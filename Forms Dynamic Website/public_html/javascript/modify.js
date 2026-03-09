@@ -32,11 +32,11 @@ function displayEditTarget(target)
 
             htmlString += `
             <div class="imageRow">
-
+                <h5>Current Image</h5>
                 <img src="${img}" class="previewImage">
 
                 <input 
-                    type="text"
+                    type="file"
                     id="modifyExampleImage_${index}_${imgIndex}"
                     value="${img}"
                 >
@@ -99,7 +99,7 @@ function addImageInput(exampleIndex)
         <input
             type="text"
             id="modifyExampleImage_${exampleIndex}_${count}"
-            placeholder="Image URL"
+            accept = "image/*"
         >
 
         <button
@@ -136,15 +136,13 @@ function saveModifyTarget(targetId)
     const target = goal.targets.find(t => t.id === targetId);
     //found out how to get the first target with matching id https://stackoverflow.com/questions/46415853/javascript-array-find-object-by-property-value
     if (!target)
-       
         return;
     if (document.getElementById("modifyTargetNumber").value === "")
     {
         console.log("Error displayed");
         document.getElementById("targetNumberError").innerHTML = targetNumberError;
         caughtError = true;
-    }
-    else
+    } else
     {
         target.number = document.getElementById("modifyTargetNumber").value;
     }
@@ -154,8 +152,7 @@ function saveModifyTarget(targetId)
         console.log("Error displayed");
         document.getElementById("targetDescriptionError").innerHTML = targetDescriptionError;
         caughtError = true;
-    }
-    else
+    } else
     {
         target.description = document.getElementById("modifyTargetDescription").value;
     }
@@ -165,32 +162,36 @@ function saveModifyTarget(targetId)
         {
             document.getElementById(`exampleTitleError_${index}`).innerHTML = exampleTitleError;
             caughtError = true;
-        }
-        else
+        } else
         {
             example.title = document.getElementById(`modifyExampleTitle_${index}`).value;
         }
 
         example.description = document.getElementById(`modifyExampleDescription_${index}`).value;
 
-        example.images = [];
+
         let rating = document.querySelector(`input[name="rating_${index}"]:checked`);
-
+        example.images = [];
         let container = document.getElementById(`imageContainer_${index}`);
+        let rows = container.querySelectorAll(".imageRow");
 
-        let inputs = container.querySelectorAll("input");
+        rows.forEach(row => {
 
-        inputs.forEach(input =>
-        {
+            let previewImage = row.querySelector(".previewImage");
+            let fileInput = row.querySelector("input[type = 'file']");
 
-            const url = input.value.trim();
-
-            if (url !== "")
+            if (fileInput.files.length > 0)
             {
-                example.images.push(url);
+                example.images.push(URL.createObjectURL(fileInput.files[0]));
+            } 
+            else if (previewImage && previewImage.src)
+            {
+                example.images.push(previewImage.src);
             }
-
-        });
+            
+            //Learned about how files are stored and how to limit to images https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/file
+            //Learned about how to create an on object url for a blob/File https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL_static
+        })
 
         let inputTags = document.getElementById(`modifyExampleTags_${index}`).value.split(',');
         inputTags.forEach(tagText =>
@@ -202,8 +203,7 @@ function saveModifyTarget(targetId)
                 console.log(tagText);
                 errorTags.push(tagText);
                 missingTag = true;
-            }
-            else
+            } else
             {
                 example.tags = inputTags;
             }

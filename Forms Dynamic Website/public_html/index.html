@@ -12,7 +12,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <script src = "javascript/tag_manager.js"></script>
         <script src = "javascript/fetch_goals.js"></script>
         <script src = "javascript/modalsAndMenu_logic.js"></script>
-        <script src="javascript/modify.js"></script>
+        <script src="javascript/modify.js" type="text/javascript"></script>
     </head>
     <body>
             <button id="hamburgerButton" onclick="toggleMenu()">☰</button>
@@ -65,20 +65,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <div id="addManager" class="page">
             <h2>Add Target</h2>
             <form id="addManagerForm">
-                <div class="card">
-                    <label>Number</label>
-                    <input type="text" id="targetNumber" placeholder="Number">
-                    <label>Description</label>
-                    <textarea id="targetDescription" placeholder="Description"></textarea>
-                </div>
-                <div class="card">
-                    <label>Images</label>
-                    <input type="file" id="targetImages" multiple>
-                </div>
-                <div class="card">
-                    <label>Tags</label>
-                    <input type="text" id="targetTags" placeholder="Tags">
-                </div>
+                <label>Target Number</label>
+                <input type="text" id="targetNumber" placeholder="Number">
+
+                <label>Target Description</label>
+                <textarea id="targetDescription" placeholder="Target description"></textarea>
+
+                <label>Title</label>
+                <input type="text" id="targetTitle" placeholder="Title">
+
+                <label>Description</label>
+                <textarea id="targetDescriptionDetail" placeholder="Description"></textarea>
+
+                <label>Images</label>
+                <input type="file" id="targetImages" multiple>
+
+                <label>Tags</label>
+                <input type="text" id="targetTags" placeholder="Tags">
+
                 <button type="submit" class="button">Submit</button>
             </form>
         </div>
