@@ -1,6 +1,6 @@
 :root{
-  --primary: #0B7285;        /*✅ teal */
-  --primaryHover: #0E859C;
+    --primary: #0B7285;        /*✅ teal */
+    --primaryHover: #0E859C;
     --surface: #FFFFFF;        /* ✅cards/table/modal background */
     --border: #E2E8F0;          /*✅*/
     /*
@@ -26,19 +26,19 @@ a:hover{
     font-size: 13px;
 }
 body{
-   margin: 0;
-   padding: 0px;
-   font-family: sans-serif;
-   background: #f5f5f5;
-   color: #414042;
+    margin: 0;
+    padding: 0px;
+    font-family: sans-serif;
+    background: #f5f5f5;
+    color: #414042;
 }
 button{
-   padding: 10px 14px;
-   margin-right: 8px;
-   border: 1px solid #cfd6dd;
-   background: var(--surface);
-   border-radius: 10px;
-   box-shadow: #ccc 5px 5px 5px;
+    padding: 10px 14px;
+    margin-right: 8px;
+    border: 1px solid #cfd6dd;
+    background: var(--surface);
+    border-radius: 10px;
+    box-shadow: #ccc 5px 5px 5px;
 }
 button:hover{
     background: #f7fbff;
@@ -46,11 +46,14 @@ button:hover{
 }
 h1{
     color: #074e63;
-     font-size: 30px;
+    font-size: 30px;
 }
 h2{
     color: #036c82;
-     font-size: 20px;
+    font-size: 20px;
+}
+h3, h5{
+    color: #036c82;
 }
 td:hover{
     background: #EDFDFF;
@@ -76,7 +79,7 @@ input[type=text],textarea,input[type=file]{
     gap: 10px;
     display:flex;
     margin-left: auto;
-    
+
 }
 #navMenu h1{
     color: var(--surface);
@@ -157,6 +160,33 @@ input[type=text],textarea,input[type=file]{
     font-size: 18px;
     color: #BA343A;
 }
+.fav_cell
+{
+    position: relative;
+}
+
+.fav_tooltip
+{
+    top: -1px;
+    position: absolute;
+    left: 100%;
+    background: #fff;
+    padding: 3px 10px;
+    width: 200px;
+    text-wrap: balance;
+    border: 1px solid #ccc;
+
+    transform-origin: left;
+    transform: scaleX(0);
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.fav_cell:hover .fav_tooltip
+{
+    transform: scaleX(1);
+    opacity: 1;
+}
 /*------------Tags Manager window------------*/
 .tag
 {
@@ -186,10 +216,14 @@ dialog{
     display: inline-block;
 }
 .rating_stars_display{
-    font-size: 18px; 
+    font-size: 18px;
 }
 #hamburgerButton {
     display: none;
+}
+#deleteModal, #infoModal
+{
+    position: fixed;
 }
 /*------------Confirmation Window------------*/
 .boldHighlight{
@@ -197,31 +231,31 @@ dialog{
 }
 /*------------MOBILE PHONES------------*/
 @media screen and (max-width: 786px) {
-    
+
     #hamburgerButton {
         display: block;
         font-size: 24px;
         background: none;
         border: none;
     }
-    #navMenu 
+    #navMenu
     {
         display: none;
         flex-direction: column;
         margin-top: 10px;
     }
-    
+
     #navMenu button {
         width: 50%;
         margin: 0 auto;
     }
-    
-    #navMenu.show 
+
+    #navMenu.show
     {
         display: flex;
     }
-    
-    #databaseTable 
+
+    #databaseTable
     {
         display: flex;
         flex-direction: column;
@@ -233,19 +267,19 @@ dialog{
     {
         width: 80%;
     }
-    .card 
+    .card
     {
         border: 1px solid #ccc;
         border-radius: 10px;
         padding: 12px;
         background: white;
     }
-    
+
 }
 
 /*DELETE*/
 
-.page 
+.page
 {
     display: none;
     padding: 16px;
@@ -253,41 +287,42 @@ dialog{
     margin: auto;
 }
 
-.page h2 
+.page h2
 {
     text-align: center;
     margin-bottom: 20px;
 }
 
-.card 
+.card
 {
     position: relative; /*fix the botton to the right side*/
-    
+
     background: #ffffff;
     border-radius: 14px;
     padding: 16px;
     margin-bottom: 16px;
 }
 
-label 
+label
 {
     display: block;
     margin-top: 12px;
     font-weight: 600;
 }
 
-input,textarea 
+input,textarea
 {
     width: 100%;
     margin-top: 6px;
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
-    font-size: 16px;}
+    font-size: 16px;
+}
 
 /*the botton of the card*/
 
-#BtnInsideCard 
+#BtnInsideCard
 {
     position: absolute;
     top: 8px;
@@ -303,7 +338,9 @@ input,textarea
 }
 
 /*The .show will be selected and display the bottons*/
-.cardMenu.show{ display: block; }
+.cardMenu.show{
+    display: block;
+}
 
 /*NAV MENU*/
 #navMenu
@@ -313,46 +350,35 @@ input,textarea
     align-items: center;
     justify-content: center;
 }
-.fav_cell 
-{
-    position: relative;
-    
-    cursor: pointer;
-}
-
-.fav_tooltip 
-{
-    top: -1px;
-    position: absolute;
-    left: 100%;
-    background: #fff;
-    padding: 3px 10px;
-    width: 200px;
-    text-wrap: balance;
-    border: 1px solid #ccc;
-    
-    transform-origin: left;
-    transform: scaleX(0);
-    opacity: 0;
-    transition: 0.5s;
-}
-
-.fav_cell:hover .fav_tooltip 
-{
-    transform: scaleX(1);
-    opacity: 1;
-}
 /*---------Modify---------*/
 .card label
 {
-    display: inline-flex; // prevents large line breaks
-    align-items: center;
-    gap: 4px; // spacing between radio button and number
-    margin-bottom: 0; // remove default bottom margin
+    display: inline-flex;
+    // prevents large line breaks
+    gap: 4px;
+    // spacing between radio button and number
+    margin-bottom: 0;
+    // remove default bottom margin
 }
 .previewImage
 {
     width: 100%;
+}
+.labelButton
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    margin-right: 8px;
+    border: 1px solid #cfd6dd;
+    background: var(--surface);
+    border-radius: 10px;
+    box-shadow: #ccc 5px 5px 5px;
+}
+.labelButton input
+{
+    margin: 0;
 }
 
 
