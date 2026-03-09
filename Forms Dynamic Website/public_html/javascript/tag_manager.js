@@ -64,7 +64,7 @@ function removeTag()
     }
     const tagExists = displayTags.some(tag => tag === tagToRemove);
     // Wanted to find if an object was in an array https://stackoverflow.com/questions/237104/how-do-i-check-if-an-array-includes-a-value-in-javascript
-
+    
     if (!tagExists)
     {
         document.getElementById("tagInput_error").innerText = "No tag found with that value";
@@ -103,8 +103,7 @@ function modifyTag()
     errorElement.innerText = ""; // clear previous error
 
     // Check for empty inputs
-    if (!oldTag || !newTag)
-    {
+    if (!oldTag || !newTag) {
         errorElement.innerText = "Please enter tags in both inputs";
         return;
     }
@@ -112,32 +111,27 @@ function modifyTag()
     let exists = false;
 
 // Loop through all tags in uniqueTags
-    for (let i = 0; i < uniqueTags.length; i++)
-    {
+    for (let i = 0; i < uniqueTags.length; i++) {
         // Check if its the same
-        if (uniqueTags[i].toLowerCase() === newTag.toLowerCase())
-        {
+        if (uniqueTags[i].toLowerCase() === newTag.toLowerCase()) {
             exists = true;
             break; // stop the loop once match is found
         }
     }
 
     // Show the error if the tag exists
-    if (exists)
-    {
+    if (exists) {
         errorElement.innerText = `The tag "${newTag}" already exists`;
         return; // Exit the modifyTag function
-    }
-
+    }   
+    
     let foundTag = false;
-
+    
     // Loops to modify oldTag to newTag
     goal.targets.forEach(target => {
         target.examples.forEach(example => {
-            for (let i = 0; i < example.tags.length; i++)
-            {
-                if (example.tags[i].toLowerCase() === oldTag.toLowerCase())
-                {
+            for (let i = 0; i < example.tags.length; i++) {
+                if (example.tags[i].toLowerCase() === oldTag.toLowerCase()) {
                     example.tags[i] = newTag;
                     foundTag = true;
                 }
@@ -146,17 +140,14 @@ function modifyTag()
     });
 
     // If old tag is not found anywhere
-    if (!foundTag)
-    {
+    if (!foundTag) {
         errorElement.innerText = `No tag found with the value "${oldTag}"`;
         return;
     }
 
     // Update pendingTags
-    for (let i = 0; i < pendingTags.length; i++)
-    {
-        if (pendingTags[i].toLowerCase() === oldTag.toLowerCase())
-        {
+    for (let i = 0; i < pendingTags.length; i++) {
+        if (pendingTags[i].toLowerCase() === oldTag.toLowerCase()) {
             pendingTags[i] = newTag;
         }
     }

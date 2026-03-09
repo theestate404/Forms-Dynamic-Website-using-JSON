@@ -1,11 +1,11 @@
 //Global varibles
 let goal = null, container = null;
 let uniqueId = null; //fix the error
-let sortDirection =
-        {
-            number: "ascending",
-            description: "ascending"
-        };
+let sortDirection = 
+{
+     number: "ascending",
+     description: "ascending"
+};
 // Could not us window.onload on two separate .js files and found an alternative: https://stackoverflow.com/questions/67212323/two-js-files-with-window-onload-function-are-conflicting#:~:text=onload%20%2C%20as%20you%20have%20noticed,adds%20a%20listener%20when%20called.
 window.addEventListener("load", () => {
 
@@ -16,7 +16,7 @@ window.addEventListener("load", () => {
             .then(jsonData =>
             {
                 goal = jsonData.goal;
-
+                
                 //------Fix problen with unique Id--------//
                 uniqueId = goal.targets.length;
                 //------Fix problen with unique Id--------//
@@ -40,14 +40,19 @@ window.addEventListener("load", () => {
                     displayData();
                 });
             }).catch(err =>
-    {
-        console.error(err);
-        container.innerHTML = "Failed to load data";
-    });
+            {
+                console.error(err);
+                container.innerHTML = "Failed to load data";
+            });
     // Had an issue where i couldnt get error handling to work but learned fetch() returns a promise and how to use .catch in : https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Async_JS/Promises#error_handling
-    document.getElementById("tagManager").style.display = "none";
-    document.getElementById("addManager").style.display = "none";
-    document.getElementById("displayEditTarget").style.display = "none";
+            document.getElementById("tagManager").style.display = "none";
+            document.getElementById("addManager").style.display = "none";
+            document.getElementById("editTargetWindow").style.display = "none";
+            
+            document.getElementById("addManagerForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            addTarget();
+            });
 });
 /*-----------Sort targets by description or number and re-build table-----------*/
 function handleSort(column)
@@ -60,48 +65,46 @@ function handleSort(column)
     {
         sortDirection[column] = "ascending";
     }
-
-    if (sortDirection[column] === "ascending")
+    
+    if(sortDirection[column] === "ascending")
     {
-        goal.targets.sort((a, b) => a[column] < b[column] ? -1 : 1);
+        goal.targets.sort((a, b) => a[column] < b[column]? -1: 1);
     }
     else
     {
-        goal.targets.sort((a, b) => a[column] < b[column] ? 1 : -1);
+        goal.targets.sort((a, b) => a[column] < b[column]? 1: -1);
 
     }
     displayData();
 }
 /*-------------------Render goal info and table rows-------------------*/
-/*----------------Starts with table creation----------------*/
-function displayData()
-{
+            /*----------------Starts with table creation----------------*/
+function displayData() {
 
 
     let htmlString = "";
-
+    
     const isMobile = window.matchMedia("(max-width: 786px)").matches;
     //https://stackoverflow.com/questions/53382733/how-to-get-window-width-in-javascript-to-match-the-css-media
     //https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
     const targets = goal.targets;
-    ////TOP SECTION
-    htmlString = `
-
-        <h1>Goal ${goal.number}</h1>
-        <h2>${goal.title}</h2>
-        <p>${goal.description}</p>
-        <br>`;
-    if (isMobile)
+    if(isMobile)
     {
-        targets.forEach((target, index) => {
-            htmlString += `
+                //TOP SECTION
+                htmlString = `
+                    <h1>Goal ${goal.number}</h1>
+                    <h2>${goal.title}</h2>
+                    <p>${goal.description}</p>`;
+        
+                targets.forEach((target, index) => {
+                    htmlString += `
                     <div class = "card" onClick = "openInfoModal(goal.targets[${index}])">
 
                         <button id="BtnInsideCard" onClick="event.stopPropagation(); toggleCardMenu(${index})">▾</button>
                         
                         <div class="cardMenu" id="cardMenu${index}">
                             <button onclick="editTarget(${index})">Edit</button>
-                            <button onclick="deleteTarget(${index})">Delete</button>
+                            <button class="delete_btn" onclick="deleteTarget(${index})">Delete</button>
                         </div>
                         
                         <h3>Target ${target.number}</h3>
@@ -109,10 +112,10 @@ function displayData()
                         
                     </div>`
             //onclick="event.stopPropagation(); will stop the openInforModal
-
-        });
-        // Link section
-        htmlString += `
+                    
+                });
+                // Link section
+                htmlString += `
                 <hr>
                 <h3>Links</h3>
                 <a href = "${goal.links.official}">${goal.links.official}</a>
@@ -124,7 +127,11 @@ function displayData()
     else
     {
         /*----------------Starts with table creation----------------*/
-        htmlString += `
+        htmlString = `
+            <h1>Goal ${goal.number}</h1>
+            <h2>${goal.title}</h2>
+            <p>${goal.description}</p>
+            <br>
         <table id = "dataTable">
             <tr>
                 <th class = "th_selectable" onclick = handleSort("id")>ID ${sortDirection[`id`] === "ascending" ? "&#8593" : "&#8595"}</th>
@@ -138,10 +145,9 @@ function displayData()
         goal.targets.forEach((target, index) =>
         {
             const targetIsFavourite = target.examples.some(example => example.isFavourite); //Some: at least one item is true
-            //R Filled heart : empty heart
+           //R Filled heart : empty heart
             let heart;
-            if (targetIsFavourite)
-            {
+            if (targetIsFavourite){
                 heart = "&#10084;";
             }
             else
@@ -150,14 +156,11 @@ function displayData()
             }
             let favouritedExamples = "";
             let hasFavourites = false;
-            for (let i = 0; i < target.examples.length; i++)
-            {
-                if (target.examples[i].isFavourite)
-                {
+            for (let i = 0; i < target.examples.length; i++) {
+                if (target.examples[i].isFavourite) {
 
                     // Open <ul> only once
-                    if (!hasFavourites)
-                    {
+                    if (!hasFavourites) {
                         favouritedExamples = "<ul>";
                         hasFavourites = true;
                     }
@@ -166,12 +169,9 @@ function displayData()
                 }
             }
             //Close </ul> only if opened
-            if (hasFavourites)
-            {
+            if (hasFavourites) {
                 favouritedExamples += "</ul>";
-            }
-            else
-            {
+            } else {
                 favouritedExamples = "No Favourites";
             }
             htmlString += `
@@ -191,30 +191,28 @@ function displayData()
 
         });
         htmlString += `</table>`;
-    }
-    // Link section
+
+        // Link section
         htmlString += `
-                <hr>
-                <h3>Links</h3>
-                <a href = "${goal.links.official}">${goal.links.official}</a>
-                <br>
-                <a href = "${goal.links.undp}">${goal.links.undp}</a>
-                `;
+            <hr>
+            <h3>Links</h3>
+            <a href = "${goal.links.official}" target="_blank">${goal.links.official}</a>
+            <br>
+            <a href = "${goal.links.undp}" target="_blank">${goal.links.undp}</a>
+            `;       
+    }
     container.innerHTML = htmlString;
 }
-/*-------------------^ End of table ^-------------------*/
+                    /*-------------------^ End of table ^-------------------*/
 
 /*---------------0–5 star rating string---------------*/
-function builtStarRating(ratingNumber)
-{
+function builtStarRating(ratingNumber){
     let stars = "";
-    for (let i = 0; i < ratingNumber; i++)
-    {
+    for(let i = 0; i< ratingNumber; i++){
         stars += "★";
     }
     //add empty stars after knowing how many full ones we already have
-    for (let i = ratingNumber; i < 5; i++)
-    {
+    for(let i = ratingNumber;i<5;i++){
         stars += "☆";
     }
     return stars;
@@ -229,11 +227,11 @@ function displayInfoModal(target)
         const favourite = example.isFavourite ? "<span>&#10084</span> Favourited" : "<span>&#9825</span>";
 
         html += `
-            <div><h4>${example.title} <span>${favourite}</span></h4></div>
+            <div><h4>${example.title}<span>${favourite}</span></h4></div>
             <div><p>${example.description}</p></div>
         `;
         //rating display
-        html += `
+        html +=`
         <div><p class = "rating_stars_display">${builtStarRating(example.rating_random)}</p></div>
         `;
         example.images.forEach(img => {
@@ -253,18 +251,39 @@ function displayInfoModal(target)
 function addTarget()
 {
     let number = document.getElementById("targetNumber").value
+    let title = document.getElementById("targetTitle").value
     let description = document.getElementById("targetDescription").value
-    //let tagsInput = document.getElementById("targetTags").value
-    let images = document.getElementById('targetImages').value
+    let descriptionDetail = document.getElementById("targetDescriptionDetail").value
+
+    // Convert tags string into array
+    let tagsInput = document.getElementById("targetTags").value;
+    let tagsArray = tagsInput ? tagsInput.split(",").map(tag => tag.trim()) : [];
+
+    // Convert file input into array of image names
+    let imageFiles = document.getElementById("targetImages").files;
+    let imagesArray = [];
+
+    for (let i = 0; i < imageFiles.length; i++) {
+        imagesArray.push(URL.createObjectURL(imageFiles[i]));
+    }
 
     uniqueId++
+    let accessExamples = {
+        title: title,
+        description: descriptionDetail,
+        images: imagesArray,
+        tags: tagsArray,
+        //Favourite and rating has to be false and 0, because
+        //it is a new entry.
+        isFavourite: false,
+        rating_random: 0
+    }
 
     let newTarget = {
         id: uniqueId,
         number: number,
         description: description,
-        images: images,
-        examples: [] //this is the tags on JSON
+        examples: [accessExamples] //this is the tags on JSON
     }
 
     goal.targets.push(newTarget)
