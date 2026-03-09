@@ -64,6 +64,10 @@ p{
 input[type=text],textarea,input[type=file]{
     border: 1px solid #afd9e4;
 }
+#deleteModal, #infoModal
+{
+    position: fixed;
+}
 /*------------Nav Menu------------*/
 #navMenu{
     display: flex; /*makes it a flex container*/
