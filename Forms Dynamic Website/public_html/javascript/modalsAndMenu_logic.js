@@ -1,7 +1,7 @@
 function openInfoModal(target)
 {
     displayInfoModal(target);
-    document.getElementById("infoModal").showModal();
+    document.getElementById("infoModal").showModal(); 
 }
 function closeInfoModal()
 {
@@ -12,22 +12,22 @@ function openDatabaseTable()
     document.getElementById("tagManager").style.display = "none";
     document.getElementById("databaseTable").style.display = "block";
     document.getElementById("addManager").style.display = "none";
-    document.getElementById("editTargetWindow").style.display = "none";
-    document.getElementById("editExampleWindow").style.display = "none";
+    document.getElementById("editTargetWindow").style.display="none";
+    document.getElementById("editExampleWindow").style.display="none";
 }
-function openTagManager()
+function openTagManager() 
 {
     renderTags();
 
     document.getElementById("tagManager").style.display = "block";
     document.getElementById("databaseTable").style.display = "none";
     document.getElementById("addManager").style.display = "none";
-    document.getElementById("editTargetWindow").style.display = "none";
-    document.getElementById("editExampleWindow").style.display = "none";
+    document.getElementById("editTargetWindow").style.display="none";
+    document.getElementById("editExampleWindow").style.display="none";
 }
 function openModifyTagModal()
 {
-    document.getElementById("modifyTagModal").showModal();
+    document.getElementById("modifyTagModal").showModal(); 
 }
 function closeModifyTagModal()
 {
@@ -39,15 +39,11 @@ function openAddManager()
 {
     document.getElementById("tagManager").style.display = "none";
     document.getElementById("databaseTable").style.display = "none";
-    document.getElementById("editTargetWindow").style.display = "none";
-    document.getElementById("editExampleWindow").style.display = "none";
+    document.getElementById("editTargetWindow").style.display="none";
+    document.getElementById("editExampleWindow").style.display="none";
     document.getElementById("addManager").style.display = "block";
 }
-function toggleMenu()
-{
-    const menu = document.getElementById("navMenu");
-    menu.classList.toggle("show");
-}
+
 function deleteConfirmationWindow(targetNum)
 {
     //populating <p> message
@@ -61,4 +57,30 @@ function deleteConfirmationWindow(targetNum)
 function closeDeleteConfirmationWindow()
 {
     document.getElementById("deleteModal").close();
+}
+
+function toggleMenu()
+{
+    const menu = document.getElementById("navMenu")
+    const btn = document.getElementById("hamburgerButton")
+
+    menu.classList.toggle("show");
+
+    if (menu.classList.contains("show"))
+        btn.innerHTML = "✕"
+    else
+        btn.innerHTML = "☰"
+}
+
+function toggleCardMenu(index)
+{
+    const menu = document.getElementById("cardMenu" + index);
+
+    if (menu.classList.contains("show"))
+    {
+        menu.classList.remove("show")
+    } else
+    {
+        menu.classList.add("show")
+    }
 }
