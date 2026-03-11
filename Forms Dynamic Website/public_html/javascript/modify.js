@@ -4,11 +4,12 @@ function displayEditTarget(target)
     document.getElementById("databaseTable").style.display = "none";
     document.getElementById("addManager").style.display = "none";
     document.getElementById("editTargetWindow").style.display = "block";
-
+                                                //changing onclick to onsubmit to check patterns first https://stackoverflow.com/questions/5195933/with-form-validation-why-onsubmit-return-functionname-instead-of-onsubmit
+                                                //seed idea expanded and looked for a proper integration with chat gpt https://chatgpt.com/c/699c7bc3-5adc-838e-8e06-4afdb355c5b0
     let htmlString = `
     <h2>Modifying Target ${target.number}</h2>
         <h2 class = "error" id = "tagError"></h2>
-            <form id = "editForm">
+            <form id = "editForm"> 
                 <div class= "card">
                     <label>Number</label>
                     <input type="text" id="modifyTargetNumber" value="${target.number}" placeholder="Number">
@@ -119,7 +120,6 @@ function removeImage(button)
 }
 function saveModifyTarget(targetId)
 {
-
     let errorTags = [];
     let missingTag = false;
     let tagErrorMessage = "";

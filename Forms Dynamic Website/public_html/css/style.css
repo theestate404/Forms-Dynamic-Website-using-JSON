@@ -1,23 +1,20 @@
 :root{
-    --primary: #0B7285;        /*✅ teal */
+    --primary: #0B7285;        /*teal */
     --primaryHover: #0E859C;
-    --surface: #FFFFFF;        /* ✅cards/table/modal background */
-    --border: #E2E8F0;          /*✅*/
-    /*
-    --primary:#006C83;
-    --primaryHover: #018eaa;
-    --surface:#ffffff; 
-    */
+    --surface: #FFFFFF;        /*cards/table/modal background */
+    --border: #E2E8F0;         
 }
 /*------------General HTML------------*/
 *
 {
     box-sizing: border-box; /*consistent size, so padding and other aren't outside but shrinks things in'*/
 }
-a{
+a
+{
     text-decoration: none;
 }
-a:hover{
+a:hover
+{
     text-decoration: underline;
 }
 .error
@@ -25,14 +22,16 @@ a:hover{
     color: red;
     font-size: 13px;
 }
-body{
+body
+{
     margin: 0;
     padding: 0px;
     font-family: sans-serif;
     background: #f5f5f5;
     color: #414042;
 }
-button{
+button
+{
     padding: 10px 14px;
     margin-right: 8px;
     border: 1px solid #cfd6dd;
@@ -40,28 +39,35 @@ button{
     border-radius: 10px;
     box-shadow: #ccc 5px 5px 5px;
 }
-button:hover{
+button:hover
+{
     background: #f7fbff;
     transform: translateY(-2px);
 }
-h1{
+h1
+{
     color: #074e63;
     font-size: 30px;
 }
-h2{
+h2
+{
     color: #036c82;
     font-size: 20px;
 }
-h3, h5{
+h3, h5
+{
     color: #036c82;
 }
-td:hover{
+td:hover
+{
     background: #EDFDFF;
 }
-p{
+p
+{
     line-height: 1.5;
 }
-input[type=text],textarea,input[type=file]{
+input[type=text],textarea,input[type=file]
+{
     border: 1px solid #afd9e4;
 }
 #deleteModal, #infoModal
@@ -69,7 +75,8 @@ input[type=text],textarea,input[type=file]{
     position: fixed;
 }
 /*------------Nav Menu------------*/
-#navMenu{
+#navMenu
+{
     display: flex; /*makes it a flex container*/
     justify-content: space-between; /*items start from the left*/
     align-items: center;
@@ -79,29 +86,34 @@ input[type=text],textarea,input[type=file]{
     padding: 10px 10px;
     border-radius: 10px;
 }
-#navButtons{
+#navButtons
+{
     gap: 10px;
     display:flex;
     margin-left: auto;
-
 }
-#navMenu h1{
+#navMenu h1
+{
     color: var(--surface);
     margin:5px 5px;
 }
-#navMenu button{
+#navMenu button
+{
     color: var(--primary);
     box-shadow:none;
 }
 /*------------Database Table------------*/
-.close_btn{
+.close_btn
+{
     background-color: var(--primary);
     color: var(--surface);
 }
-.close_btn:hover{
+.close_btn:hover
+{
     background-color: var(--primaryHover);
 }
-#databaseTable{ /*This is the div where the table is*/
+#databaseTable
+{ /*This is the div where the table is*/
     background: var(--surface);
     padding: 20px;
     border: 1px var(--border);
@@ -109,7 +121,8 @@ input[type=text],textarea,input[type=file]{
     margin: 50px 50px;
     box-shadow: #666 10px 10px 15px;
 }
-#dataTable {
+#dataTable 
+{
     background: var(--surface);
     width: 100%;
     max-width: 1100px;
@@ -119,47 +132,67 @@ input[type=text],textarea,input[type=file]{
     border: none;
     border-radius: 12px;
 }
-
-#dataTable th {
+#dataTable td.actions_cell button
+{
+    margin: 5px 0;
+}
+#dataTable td.fav_cell, td.actions_cell
+{
+    text-align: center;
+}
+#dataTable td.actions_cell
+{
+    text-align: center;
+}
+#dataTable th 
+{
     background-color: var(--primary);
     color: var(--surface);
     border:none;
     padding: 12px;
 }
-#dataTable th:first-child {
+#dataTable th:first-child 
+{
     border-top-left-radius: 12px;
 }
-#dataTable th:last-child{
+#dataTable th:last-child
+{
     border-top-right-radius: 12px;
 }
-#dataTable td {
-    /*border: 1px solid var(--border);*/
+#dataTable td 
+{
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     padding: 10px;
     text-align: left;
 }
-#dataTable td:first-child{
+#dataTable td:first-child
+{
     border-left: 1px solid var(--border);
     border-top-left-radius: 12px;
     border-bottom-left-radius: 12px;
 }
-#dataTable td:last-child{
+#dataTable td:last-child
+{
     border-right: 1px solid var(--border);
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
 }
-#dataTable tr:nth-child(even){
+#dataTable tr:nth-child(even)
+{
     background: #f9fafb;
 }
-.delete_btn{
+.delete_btn
+{
     background-color: #C44D46;
     color: var(--surface);
 }
-.delete_btn:hover{
+.delete_btn:hover
+{
     background-color: #e25851;
 }
-.fav_cell{
+.fav_cell
+{
     text-align: center; /*GENERAL note: centering of heart icon not working*/
     font-size: 18px;
     color: #BA343A;
@@ -169,14 +202,14 @@ input[type=text],textarea,input[type=file]{
 {
     top: -1px;
     position: absolute;
-    left: 100%;
+    right: 100%;
     background: #fff;
     padding: 3px 10px;
     width: 200px;
     text-wrap: balance;
     border: 1px solid #ccc;
-
-    transform-origin: left;
+    text-align: left;
+    transform-origin: right;
     transform: scaleX(0);
     opacity: 0;
     transition: 0.5s;
@@ -191,41 +224,55 @@ input[type=text],textarea,input[type=file]{
 .tag
 {
     display: inline-block;
-    background: #f0f0f0;
+    background: #FAFEFF;
+    color: #036c82;
     padding: 5px 10px;
     margin: 3px;
+    border: 1px solid var(--primary);
     border-radius: 8px;
 }
 /*------------DIALOG EXAMPLES------------*/
-dialog{
+dialog
+{
     max-width: 800px;
     width: 100%;
     border:none;
     position: relative;
 }
-#closeInfoModal{
+#closeInfoModal
+{
     position: absolute;
     top:15px;
     right: 15px;
 }
-#exampleTarget{
+#exampleTarget
+{
     background: var(--primary);
     padding: 20px 24px;
     border-radius: 40px;
     color: var(--surface);
     display: inline-block;
 }
-.rating_stars_display{
-    font-size: 18px;
+.heart
+{
+    color: #BA343A;
 }
-#hamburgerButton {
+.rating_stars_display
+{
+    font-size: 20px;
+    color: #BF9B2E;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px lightgray; /*x y blur*/
+}
+#hamburgerButton 
+{
     display: none;
 }
 /*------------Confirmation Window------------*/
-.boldHighlight{
+.boldHighlight
+{
     font-weight: bold;
 }
-
 .page
 {
     display: none;
@@ -233,13 +280,11 @@ dialog{
     max-width: 600px;
     margin: auto;
 }
-
 .page h2
 {
     text-align: center;
     margin-bottom: 20px;
 }
-
 .card
 {
     position: relative; /*fix the botton to the right side*/
@@ -249,14 +294,12 @@ dialog{
     padding: 16px;
     margin-bottom: 16px;
 }
-
 label
 {
     display: block;
     margin-top: 12px;
     font-weight: 600;
 }
-
 input,textarea
 {
     width: 100%;
@@ -266,16 +309,13 @@ input,textarea
     border: 1px solid #ccc;
     font-size: 16px;
 }
-
 /*the botton of the card*/
-
 #BtnInsideCard
 {
     position: absolute;
     top: 8px;
     right: 8px;
 }
-
 .cardMenu
 {
     position: absolute;
@@ -294,8 +334,6 @@ input,textarea
     gap: 6px;
 
 }
-
-
 /*The .show will be selected and display the bottons*/
 .cardMenu.show
 {
@@ -330,7 +368,8 @@ input,textarea
 }
 /*------------MOBILE PHONES------------*/
 @media screen and (max-width: 786px) {
-    #hamburgerButton {
+    #hamburgerButton 
+    {
         display: block;
         position: fixed;
         top: 15px;
@@ -344,8 +383,8 @@ input,textarea
         padding: 10px 14px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
-
-    #navMenu {
+    #navMenu 
+    {
         display: none;
         flex-direction: column;
         align-items: stretch;
@@ -354,26 +393,24 @@ input,textarea
         padding: 20px;
         border-radius: 12px;
     }
-
-    #navMenu.show {
+    #navMenu.show 
+    {
         display: flex;
     }
-
-    #navButtons {
+    #navButtons 
+    {
         display: flex;
         flex-direction: column;
         gap: 10px;
         margin-left: 0;
         width: 100%;
     }
-
-    #navButtons button {
+    #navButtons button 
+    {
         width: 100%;
         font-size: 16px;
         margin-right: 0;
     }
-
-
     #databaseTable
     {
         display: flex;
@@ -393,7 +430,6 @@ input,textarea
         padding: 12px;
         background: white;
     }
-
 }
 
 

@@ -107,9 +107,7 @@ function modifyTag()
         errorElement.innerText = "Please enter tags in both inputs";
         return;
     }
-
     let exists = false;
-
 // Loop through all tags in uniqueTags
     for (let i = 0; i < uniqueTags.length; i++) {
         // Check if its the same
@@ -118,15 +116,12 @@ function modifyTag()
             break; // stop the loop once match is found
         }
     }
-
     // Show the error if the tag exists
     if (exists) {
         errorElement.innerText = `The tag "${newTag}" already exists`;
         return; // Exit the modifyTag function
-    }   
-    
+    }  
     let foundTag = false;
-    
     // Loops to modify oldTag to newTag
     goal.targets.forEach(target => {
         target.examples.forEach(example => {
@@ -138,7 +133,6 @@ function modifyTag()
             }
         });
     });
-
     // If old tag is not found anywhere
     if (!foundTag) {
         errorElement.innerText = `No tag found with the value "${oldTag}"`;
@@ -151,7 +145,6 @@ function modifyTag()
             pendingTags[i] = newTag;
         }
     }
-
     getTags();
     displayData();
     renderTags();

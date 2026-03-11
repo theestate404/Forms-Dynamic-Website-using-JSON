@@ -5,11 +5,11 @@ let sortDirection =
         {
             id: "ascending",
             number: "ascending",
-            description: "ascending"
+            description: "ascending",
+            favourite: "ascending"
         };
 // Could not us window.onload on two separate .js files and found an alternative: https://stackoverflow.com/questions/67212323/two-js-files-with-window-onload-function-are-conflicting#:~:text=onload%20%2C%20as%20you%20have%20noticed,adds%20a%20listener%20when%20called.
 window.addEventListener("load", () => {
-
     container = document.getElementById("databaseTable");
     let url = "json/un_sustainability_goal_12.json";
     fetch(url)
@@ -17,11 +17,9 @@ window.addEventListener("load", () => {
             .then(jsonData =>
             {
                 goal = jsonData.goal;
-
                 //------Fix problen with unique Id--------//
                 uniqueId = goal.targets.length;
                 //------Fix problen with unique Id--------//
-
                 /**/
                 goal.targets.forEach(target => {
                     target.examples.forEach(example => {
@@ -72,17 +70,24 @@ function handleSort(column)
     } else
     {
         goal.targets.sort((a, b) => a[column] < b[column] ? 1 : -1);
-
     }
     displayData();
 }
+function handleSortFav()
+{
+    if (sortDirection["favourite"] === "ascending")
+    {
+        sortDirection["favourite"] = "descending";
+    } else
+    {
+        sortDirection["favourite"] = "ascending";
+    }
+}
 /*-------------------Render goal info and table rows-------------------*/
 /*----------------Starts with table creation----------------*/
-function displayData() {
-
-
+function displayData() 
+{
     let htmlString = "";
-
     const isMobile = window.matchMedia("(max-width: 786px)").matches;
     //https://stackoverflow.com/questions/53382733/how-to-get-window-width-in-javascript-to-match-the-css-media
     //https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
@@ -123,7 +128,7 @@ function displayData() {
                 <th class = "th_selectable" onclick = handleSort("id")>ID ${sortDirection[`id`] === "ascending" ? "&#8593" : "&#8595"}</th>
                 <th class = "th_selectable" onclick = handleSort("number")>Target ${sortDirection[`number`] === "ascending" ? "&#8593" : "&#8595"}</th>
                 <th class = "th_selectable" onclick = handleSort("description")>Description ${sortDirection[`description`] === "ascending" ? "&#8593" : "&#8595"}</th>
-                <th id = "sortFavourite">Favourite</th>
+                <th id = "sortFavourite" class = "th_selectable" onclick = "handleSortFav()">Favourite ${sortDirection[`favourite`]==="ascending" ? "&#8593" : "&#8595"}</th>
                 <th>Actions</th>
         </tr>
             `;
@@ -132,31 +137,33 @@ function displayData() {
         {
             const targetIsFavourite = target.examples.some(example => example.isFavourite); //Some: at least one item is true
             //R Filled heart : empty heart
-            let heart;
+            let heart, favConfirm;
             if (targetIsFavourite) {
                 heart = "&#10084;";
+                favConfirm = "Yes";
             } else
             {
                 heart = "&#9825;";
+                favConfirm = "No";
             }
             let favouritedExamples = "";
             let hasFavourites = false;
             for (let i = 0; i < target.examples.length; i++) {
                 if (target.examples[i].isFavourite) {
-
                     // Open <ul> only once
                     if (!hasFavourites) {
                         favouritedExamples = "<ul>";
                         hasFavourites = true;
                     }
-
                     favouritedExamples += "<li>" + target.examples[i].title + "</li>";
                 }
             }
             //Close </ul> only if opened
-            if (hasFavourites) {
+            if (hasFavourites) 
+            {
                 favouritedExamples += "</ul>";
-            } else {
+            } else 
+            {
                 favouritedExamples = "No Favourites";
             }
             htmlString += `
@@ -164,12 +171,12 @@ function displayData() {
                     <td onclick = "openInfoModal(goal.targets[${index}])">${target.id}</td>
                     <td onclick = "openInfoModal(goal.targets[${index}])">${target.number}</td>
                     <td onclick = "openInfoModal(goal.targets[${index}])">${target.description}</td>
-                    <td class = "fav_cell">${heart}
+                    <td class = "fav_cell"><span class = "boldHighlight">${favConfirm}</span>
                         <div class = "fav_tooltip">${favouritedExamples}</div>
                     </td>
                     <td class = "actions_cell">
                     <button type="button" class = "edit_btn" onclick="displayEditTarget(goal.targets[${index}])">Edit</button>
-                    <button type="button" class = "delete_btn" onclick="deleteConfirmationWindow(${target.number})">Delete</button> 
+                    <button type="button" class = "delete_btn" onclick="deleteConfirmationWindow(${index})">Delete</button> 
                     </td>
             </tr>
                 `;
@@ -190,7 +197,8 @@ function displayData() {
 /*-------------------^ End of table ^-------------------*/
 
 /*---------------0–5 star rating string---------------*/
-function builtStarRating(ratingNumber) {
+function builtStarRating(ratingNumber)
+{
     let stars = "";
     for (let i = 0; i < ratingNumber; i++) {
         stars += "★";
@@ -206,10 +214,8 @@ function displayInfoModal(target)
 {
     const content = document.getElementById("infoModalContent");
     let html = `<h2 id = "exampleTarget">Target ${target.number}</h2>`;
-
     target.examples.forEach(example => {
-        const favourite = example.isFavourite ? "<span>&#10084</span> Favourited" : "<span>&#9825</span>";
-
+        const favourite = example.isFavourite ? "<span class='heart'>&#10084</span> Favourited" : "<span class='heart'>&#9825</span>";
         html += `
             <div><h4>${example.title} <span>${favourite}</span></h4></div>
             <div><p>${example.description}</p></div>
@@ -227,10 +233,8 @@ function displayInfoModal(target)
     //https://stackoverflow.com/questions/68861893/how-can-i-display-an-array-of-strings-of-an-object-as-spans-in-a-js-template-lit
     //learned about .join for arrays from: https://www.w3schools.com/jsref/jsref_join.asp
     content.innerHTML = html;
-
     document.getElementById("closeInfoModal").onclick = closeInfoModal;
 }
-
 //ADD Target to the talbe
 function addTarget()
 {
@@ -250,7 +254,6 @@ function addTarget()
     for (let i = 0; i < imageFiles.length; i++) {
         imagesArray.push(URL.createObjectURL(imageFiles[i]));
     }
-
     uniqueId++
     let accessExamples = {
         title: title,
@@ -262,20 +265,14 @@ function addTarget()
         isFavourite: false,
         rating_random: 0
     }
-
     let newTarget = {
         id: uniqueId,
         number: number,
         description: description,
         examples: [accessExamples] //this is the tags on JSON
     }
-
     goal.targets.push(newTarget)
-
-
     displayData()
-
 //to show the table with added test
     openDatabaseTable()
-
 }

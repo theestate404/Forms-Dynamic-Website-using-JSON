@@ -34,7 +34,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <div><h2>Delete Confirmation</h2></div>
             <div><p id="messageDelete"></p></div>
             <div>
-                <button id="confirmDelete" class = "delete_btn">Delete</button>
+                <button id="confirmDelete" class = "delete_btn" onclick="completeDelete()">Delete</button>
                 <button type="button" id="cancelDelete" onclick="closeDeleteConfirmationWindow()">Cancel</button>
             </div>
         </dialog>
@@ -67,16 +67,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <form id="addManagerForm">
                 <label>Target Number</label>
                 <input type="text" id="targetNumber" placeholder="Number">
-
+                
                 <label>Target Description</label>
                 <textarea id="targetDescription" placeholder="Target description"></textarea>
-
+                
                 <label>Title</label>
                 <input type="text" id="targetTitle" placeholder="Title">
-
+                
                 <label>Description</label>
                 <textarea id="targetDescriptionDetail" placeholder="Description"></textarea>
-
+                
                 <label>Images</label>
                 <input type="file" id="targetImages" multiple>
 
