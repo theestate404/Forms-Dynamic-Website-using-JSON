@@ -42,6 +42,8 @@ function openAddManager()
     document.getElementById("editTargetWindow").style.display="none";
     document.getElementById("editExampleWindow").style.display="none";
     document.getElementById("addManager").style.display = "block";
+    
+    displayAvailableTags();
 }
 
 function deleteConfirmationWindow(targetNum)

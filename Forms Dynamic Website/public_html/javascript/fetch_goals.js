@@ -18,11 +18,8 @@ window.addEventListener("load", () => {
             {
                 goal = jsonData.goal;
 
-                //------Fix problen with unique Id--------//
                 uniqueId = goal.targets.length;
-                //------Fix problen with unique Id--------//
 
-                /**/
                 goal.targets.forEach(target => {
                     target.examples.forEach(example => {
                         example.isFavourite = Math.random() < 0.33;
@@ -100,9 +97,9 @@ function displayData() {
 
                         <button id="BtnInsideCard" onClick="event.stopPropagation(); toggleCardMenu(${index})">▾</button>
                         
-                        <div class="cardMenu" id="cardMenu${index}">
-                            <button onclick="editTarget(${index})">Edit</button>
-                            <button class="delete_btn" onclick="deleteTarget(${index})">Delete</button>
+                        <div class="cardMenu" id="cardMenu${index}">                          
+                            <button type="button" class = "edit_btn" onclick="event.stopPropagation(); displayEditTarget(goal.targets[${index}])">Edit</button>
+                            <button type="button" class = "delete_btn" onclick="event.stopPropagation(); deleteConfirmationWindow(${target.number})">Delete</button>
                         </div>
                         
                         <h3>Target ${target.number}</h3>
@@ -234,10 +231,35 @@ function displayInfoModal(target)
 //ADD Target to the talbe
 function addTarget()
 {
-    let number = document.getElementById("targetNumber").value
-    let title = document.getElementById("targetTitle").value
-    let description = document.getElementById("targetDescription").value
-    let descriptionDetail = document.getElementById("targetDescriptionDetail").value
+    let number = document.getElementById("targetNumber").value.trim()
+    let title = document.getElementById("targetTitle").value.trim()
+    let description = document.getElementById("targetDescription").value.trim()
+    let descriptionDetail = document.getElementById("targetDescriptionDetail").value.trim()
+    
+    let errorMessage = "";
+
+    if (number === "")
+    {
+        errorMessage = "Please enter a target number.";
+    } else if (title === "")
+    {
+        errorMessage = "Please enter a target title.";
+    } else if (description === "")
+    {
+        errorMessage = "Please enter a target description.";
+    } else if (descriptionDetail === "")
+    {
+        errorMessage = "Please enter a detailed description.";
+    }
+
+    if (errorMessage !== "")
+    {
+        document.getElementById("addTarget_error").innerText = errorMessage;
+        return;
+    }
+
+    document.getElementById("addTarget_error").innerText = "";
+
 
     // Convert tags string into array
     let tagsInput = document.getElementById("targetTags").value;
@@ -269,13 +291,18 @@ function addTarget()
         description: description,
         examples: [accessExamples] //this is the tags on JSON
     }
+    
 
     goal.targets.push(newTarget)
-
-
     displayData()
-
-//to show the table with added test
     openDatabaseTable()
 
 }
+
+function displayAvailableTags()
+{
+    let html = displayTags.map(tag => `<span class="tag">${tag}</span>`).join(" ");
+
+    document.getElementById("displayAvailableTags").innerHTML = html;
+}
+

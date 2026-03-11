@@ -64,13 +64,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <!-- _______________ADD TARGET_______________-->
         <div id="addManager" class="page">
             <h2>Add Target</h2>
+            <p id="addTarget_error" style="color:red;"></p>
             <form id="addManagerForm">
+                <div class="card">
                 <label>Target Number</label>
                 <input type="text" id="targetNumber" placeholder="Number">
 
                 <label>Target Description</label>
                 <textarea id="targetDescription" placeholder="Target description"></textarea>
-
+                </div>
+                
+                <div class="card">
                 <label>Title</label>
                 <input type="text" id="targetTitle" placeholder="Title">
 
@@ -78,10 +82,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <textarea id="targetDescriptionDetail" placeholder="Description"></textarea>
 
                 <label>Images</label>
-                <input type="file" id="targetImages" multiple>
+                <input type="file" id="targetImages" accept="image/*" multiple>
+                <div id="imagePreviewContainer"></div>
 
                 <label>Tags</label>
                 <input type="text" id="targetTags" placeholder="Tags">
+                </div>
+                
+                <div class="card">
+                <h3>Available Tags</h3>
+                <div id="displayAvailableTags"></div>
+                </div>
 
                 <button type="submit" class="button">Submit</button>
             </form>
