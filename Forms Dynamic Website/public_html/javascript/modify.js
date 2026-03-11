@@ -4,16 +4,18 @@ function displayEditTarget(target)
     document.getElementById("databaseTable").style.display = "none";
     document.getElementById("addManager").style.display = "none";
     document.getElementById("editTargetWindow").style.display = "block";
-
+                                                //changing onclick to onsubmit to check patterns first https://stackoverflow.com/questions/5195933/with-form-validation-why-onsubmit-return-functionname-instead-of-onsubmit
+                                                //seed idea expanded and looked for a proper integration with chat gpt https://chatgpt.com/c/699c7bc3-5adc-838e-8e06-4afdb355c5b0
     let htmlString = `
     <h2>Modifying Target ${target.number}</h2>
         <h2 class = "error" id = "tagError"></h2>
-            <form id = "editForm">
+            <form id = "editForm" onsubmit="return saveModifyTarget(${target.id})"> 
                 <div class= "card">
                     <label>Number</label>
-                    <input type="text" id="modifyTargetNumber" value="${target.number}" placeholder="Number">
+                    <input type="text" id="modifyTargetNumber" value="${target.number}" placeholder="Number" required pattern = "^[1-9][0-9]*\.[0-9]+$" title = "Enter a decimal number starting from 1 (example: 1.4, 13.22).">
                     <label>Description</label>
                     <textarea id="modifyTargetDescription" placeholder="Description">${target.description}</textarea>
+                    <small>This field can't be empty. Please enter a description.</small>
                     <p class = "error" id = "targetDescriptionError"></p>
                 </div>
                 <h2>Examples</h2>`;
@@ -22,9 +24,11 @@ function displayEditTarget(target)
             <div class="card">
                 <h3>Title</h3>
                 <input type="text" id="modifyExampleTitle_${index}" value="${example.title}" placeholder="Title">
+                <small>This field can't be empty. Please enter a title.</small>
                 <p class = "error" id = "exampleTitleError_${index}"></p>
                 <h3>Description</h3>
-                <textarea id="modifyExampleDescription_${index}" placeholder="Description">${example.description}</textarea>
+                <textarea id="modifyExampleDescription_${index}" placeholder="Description" required minlength="1" title = "This field can't be empty. Please enter a description.">${example.description}</textarea>
+                <small>This field can't be empty. Please enter a description.</small>
                 <p class = "error" id = "exampleDescriptionError_${index}"></p>
                 <h3>Images</h3>
                 <div id="imageContainer_${index}">`;
@@ -77,7 +81,7 @@ function displayEditTarget(target)
     });
     htmlString += `
         <div>
-            <button type="button" onclick="saveModifyTarget(${target.id})">Save All</button>
+            <button type="submit">Save All</button>
             <button type="button" onclick="openDatabaseTable()">Cancel</button>
         </div>
         </form>
@@ -119,7 +123,6 @@ function removeImage(button)
 }
 function saveModifyTarget(targetId)
 {
-
     let errorTags = [];
     let missingTag = false;
     let tagErrorMessage = "";
@@ -136,7 +139,7 @@ function saveModifyTarget(targetId)
     const target = goal.targets.find(t => t.id === targetId);
     //found out how to get the first target with matching id https://stackoverflow.com/questions/46415853/javascript-array-find-object-by-property-value
     if (!target)
-        return;
+        return false;
     if (document.getElementById("modifyTargetNumber").value === "")
     {
         console.log("Error displayed");
@@ -156,7 +159,6 @@ function saveModifyTarget(targetId)
     {
         target.description = document.getElementById("modifyTargetDescription").value;
     }
-
     target.examples.forEach((example, index) => {
         if (document.getElementById(`modifyExampleTitle_${index}`).value === "")
         {
@@ -166,20 +168,14 @@ function saveModifyTarget(targetId)
         {
             example.title = document.getElementById(`modifyExampleTitle_${index}`).value;
         }
-
         example.description = document.getElementById(`modifyExampleDescription_${index}`).value;
-
-
         let rating = document.querySelector(`input[name="rating_${index}"]:checked`);
         example.images = [];
         let container = document.getElementById(`imageContainer_${index}`);
         let rows = container.querySelectorAll(".imageRow");
-
         rows.forEach(row => {
-
             let previewImage = row.querySelector(".previewImage");
             let fileInput = row.querySelector("input[type = 'file']");
-
             if (fileInput.files.length > 0)
             {
                 example.images.push(URL.createObjectURL(fileInput.files[0]));
@@ -187,12 +183,10 @@ function saveModifyTarget(targetId)
             else if (previewImage && previewImage.src)
             {
                 example.images.push(previewImage.src);
-            }
-            
+            }        
             //Learned about how files are stored and how to limit to images https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/file
             //Learned about how to create an on object url for a blob/File https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL_static
         })
-
         let inputTags = document.getElementById(`modifyExampleTags_${index}`).value.split(',');
         inputTags.forEach(tagText =>
         {
@@ -224,9 +218,10 @@ function saveModifyTarget(targetId)
     }
     if (caughtError)
     {
-        return;
+        return false;
     }
     displayData();       // refresh table
     openDatabaseTable();
+    return false; //prevents page to refresh after saving
 }
 

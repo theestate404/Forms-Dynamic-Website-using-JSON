@@ -34,7 +34,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <div><h2>Delete Confirmation</h2></div>
             <div><p id="messageDelete"></p></div>
             <div>
-                <button id="confirmDelete" class = "delete_btn">Delete</button>
+                <button id="confirmDelete" class = "delete_btn" onclick="completeDelete()">Delete</button>
                 <button type="button" id="cancelDelete" onclick="closeDeleteConfirmationWindow()">Cancel</button>
             </div>
         </dialog>
@@ -66,17 +66,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <h2>Add Target</h2>
             <form id="addManagerForm">
                 <label>Target Number</label>
-                <input type="text" id="targetNumber" placeholder="Number">
-
+                <input type="text" id="targetNumber" placeholder="Number" required pattern = "^[1-9][0-9]*\.[0-9]+$">
+                <small>Enter a decimal number starting from 1 (example: 1.4, 13.22).</small>
+                
                 <label>Target Description</label>
-                <textarea id="targetDescription" placeholder="Target description"></textarea>
-
+                <textarea id="targetDescription" placeholder="Target description" required></textarea>
+                <small>This field can't be empty. Please enter a description.</small>
+                
                 <label>Title</label>
-                <input type="text" id="targetTitle" placeholder="Title">
-
+                <input type="text" id="targetTitle" placeholder="Title" required minlength="1" title = "This field can't be empty. Please enter a description.">
+                <small>This field can't be empty. Please enter a title.</small>
+                
                 <label>Description</label>
-                <textarea id="targetDescriptionDetail" placeholder="Description"></textarea>
-
+                <textarea id="targetDescriptionDetail" placeholder="Description"required minlength="1" title = "This field can't be empty. Please enter a description."></textarea>
+                <small>This field can't be empty. Please enter a description.</small>
+                
                 <label>Images</label>
                 <input type="file" id="targetImages" multiple>
 
