@@ -8,10 +8,11 @@ function displayEditTarget(target)
     let htmlString = `
     <h2>Modifying Target ${target.number}</h2>
         <h2 class = "error" id = "tagError"></h2>
+        <h2 class = "error" id = "numError"></h2>
             <form id = "editForm">
                 <div class= "card">
                     <label>Number</label>
-                    <input type="text" id="modifyTargetNumber" value="${target.number}" placeholder="Number">
+                    <input type="text" id="modifyTargetNumber" value="${target.number}" placeholder="Number" oninput = "removeLetterFromTargetNum(this)">
                     <label>Description</label>
                     <textarea id="modifyTargetDescription" placeholder="Description">${target.description}</textarea>
                     <p class = "error" id = "targetDescriptionError"></p>
@@ -34,11 +35,13 @@ function displayEditTarget(target)
             <div class="imageRow">
                 <h5>Current Image</h5>
                 <img src="${img}" class="previewImage">
-
+                <h5>New Image Preview</h5>
+                <img class = "newPreviewImage" style="display:none; max-width:150px;">
                 <input 
                     type="file"
                     id="modifyExampleImage_${index}_${imgIndex}"
-                    value="${img}"
+                    accept = "image/*"
+                    onchange = "previewNewImage(this)"
                 >
 
                 <button 
@@ -58,6 +61,7 @@ function displayEditTarget(target)
             </button><br>    
                 <h3>Tags (comma separated)</h3>
                 <input type="text" id="modifyExampleTags_${index}" value="${example.tags.join(', ')}" placeholder="Tags">
+                <p class = "error" id="exampleTagError_${index}"></p>
                 <h5>Available Tags</h5>
                 <p>${displayTags.map(tag => `<span class = "tag">${tag}</span>`).join(" ")}</p>
                 <h3>Favourite</h3>
@@ -93,13 +97,14 @@ function addImageInput(exampleIndex)
 
     let htmlString = `
     <div class="imageRow">
-
-        <img src="" class="previewImage">
+        <h5>New Image Preview</h5>
+        <img class = "newPreviewImage" style="display:none; max-width:150px;">
 
         <input
-            type="text"
+            type="file"
             id="modifyExampleImage_${exampleIndex}_${count}"
             accept = "image/*"
+            onchange = "previewNewImage(this)"
         >
 
         <button
@@ -116,6 +121,24 @@ function addImageInput(exampleIndex)
 function removeImage(button)
 {
     button.parentElement.remove();
+    // Learned about how to select an elements parent https://www.w3schools.com/jsref/prop_node_parentelement.asp
+}
+function previewNewImage(input)
+{
+    let row = input.closest(".imageRow");
+    let preview = row.querySelector(".newPreviewImage");
+
+    if (input.files[0])
+    {
+        preview.src = URL.createObjectURL(input.files[0]);
+        preview.style.display = "block";
+    }
+}
+function removeLetterFromTargetNum(input)
+{
+    input.value = input.value.replace(/[^0-9.]/g, "");
+    //https://www.reddit.com/r/regex/comments/10xci06/only_numbers_no_blanks/#:~:text=Just%20anchor%20it%20at%20the,every%20character%20is%20a%20digit.&text=Old%20post%2C%20but%20for%20everyone,blank%20string%20doesn%27t%20match.
+    //found out how to use .replace https://stackoverflow.com/questions/1862130/strip-all-non-numeric-characters-from-string-in-javascript
 }
 function saveModifyTarget(targetId)
 {
@@ -123,24 +146,24 @@ function saveModifyTarget(targetId)
     let errorTags = [];
     let missingTag = false;
     let tagErrorMessage = "";
+    let numOfErrors = "";
     let caughtError = false;
+    let countOfErrors = 0;
 
     let targetNumberError = "Please input value for Target Number";
     let targetDescriptionError = "Please input value for Target Description";
 
     let exampleTitleError = "Please input value for Example Title";
     let exampleDescriptionError = "Please input value for Example Description";
-    let exampleImageError = "Please import an image";
-    let exampleTagError = "";
+    let exampleTagError = "Please input value for Example Tags";
 
     const target = goal.targets.find(t => t.id === targetId);
     //found out how to get the first target with matching id https://stackoverflow.com/questions/46415853/javascript-array-find-object-by-property-value
-    if (!target)
-        return;
     if (document.getElementById("modifyTargetNumber").value === "")
     {
         console.log("Error displayed");
         document.getElementById("targetNumberError").innerHTML = targetNumberError;
+        countOfErrors++;
         caughtError = true;
     } else
     {
@@ -151,6 +174,7 @@ function saveModifyTarget(targetId)
     {
         console.log("Error displayed");
         document.getElementById("targetDescriptionError").innerHTML = targetDescriptionError;
+        countOfErrors++;
         caughtError = true;
     } else
     {
@@ -161,14 +185,24 @@ function saveModifyTarget(targetId)
         if (document.getElementById(`modifyExampleTitle_${index}`).value === "")
         {
             document.getElementById(`exampleTitleError_${index}`).innerHTML = exampleTitleError;
+            countOfErrors++;
             caughtError = true;
         } else
         {
             example.title = document.getElementById(`modifyExampleTitle_${index}`).value;
         }
-
-        example.description = document.getElementById(`modifyExampleDescription_${index}`).value;
-
+        if (document.getElementById(`modifyExampleDescription_${index}`).value === "")
+        {
+            console.log("Error displayed");
+            document.getElementById(`exampleDescriptionError_${index}`).innerHTML = targetDescriptionError;
+            countOfErrors++;
+            caughtError = true;
+        }
+        else
+        {
+            example.description = document.getElementById(`modifyExampleDescription_${index}`).value;
+        }
+        
 
         let rating = document.querySelector(`input[name="rating_${index}"]:checked`);
         example.images = [];
@@ -194,36 +228,48 @@ function saveModifyTarget(targetId)
         })
 
         let inputTags = document.getElementById(`modifyExampleTags_${index}`).value.split(',');
-        inputTags.forEach(tagText =>
+        if(document.getElementById(`modifyExampleTags_${index}`).value === "")
         {
-            tagText = tagText.trim();
+            document.getElementById(`exampleTagError_${index}`).innerHTML = exampleTagError;
+            countOfErrors++;
+            caughtError = true;
+        }
+        else
+        {
+            inputTags.forEach(tagText =>
+            {
+                tagText = tagText.trim();
 
-            if (!displayTags.includes(tagText))
-            {
-                console.log(tagText);
-                errorTags.push(tagText);
-                missingTag = true;
-            } else
-            {
-                example.tags = inputTags;
-            }
-        });
+                if (!displayTags.includes(tagText))
+                {
+                    console.log(tagText);
+                    errorTags.push(tagText);
+                    missingTag = true;
+                } else
+                {
+                    example.tags = inputTags;
+                }
+            });
+        }
         example.isFavourite = document.getElementById(`modifyExampleFavourite_${index}`).checked;
         //Found how to see if a checkbox is checked https://stackoverflow.com/questions/9887360/how-can-i-check-if-a-checkbox-is-checked
 
         example.rating_random = Number(rating.value);
-        //How to convert a String into an int https://stackoverflow.com/questions/1133770/how-can-i-convert-a-string-to-an-integer-in-javascript
+        //How to convert a String into an int because radio button returns as String https://stackoverflow.com/questions/1133770/how-can-i-convert-a-string-to-an-integer-in-javascript
     });
     if (missingTag)
     {
         tagErrorMessage = "Tag(s): " + errorTags.join(', ') + " not found";
         document.getElementById("tagError").innerHTML = tagErrorMessage;
         document.documentElement.scrollTop = 0;
-        // Found how to scroll https://stackoverflow.com/questions/4210798/how-to-scroll-to-top-of-page-with-javascript-jquery
+        // Found how to scroll to top https://stackoverflow.com/questions/4210798/how-to-scroll-to-top-of-page-with-javascript-jquery
         caughtError = true;
     }
     if (caughtError)
     {
+        numOfErrors = "Error(s): " + countOfErrors;
+        document.getElementById("numError").innerHTML = numOfErrors;
+        document.documentElement.scrollTop = 0;
         return;
     }
     displayData();       // refresh table

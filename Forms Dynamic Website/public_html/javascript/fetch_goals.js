@@ -5,7 +5,8 @@ let sortDirection =
         {
             id: "ascending",
             number: "ascending",
-            description: "ascending"
+            description: "ascending",
+            favourite: "ascending"
         };
 // Could not us window.onload on two separate .js files and found an alternative: https://stackoverflow.com/questions/67212323/two-js-files-with-window-onload-function-are-conflicting#:~:text=onload%20%2C%20as%20you%20have%20noticed,adds%20a%20listener%20when%20called.
 window.addEventListener("load", () => {
@@ -18,11 +19,8 @@ window.addEventListener("load", () => {
             {
                 goal = jsonData.goal;
 
-                //------Fix problen with unique Id--------//
                 uniqueId = goal.targets.length;
-                //------Fix problen with unique Id--------//
 
-                /**/
                 goal.targets.forEach(target => {
                     target.examples.forEach(example => {
                         example.isFavourite = Math.random() < 0.33;
@@ -58,22 +56,20 @@ window.addEventListener("load", () => {
 /*-----------Sort targets by description or number and re-build table-----------*/
 function handleSort(column)
 {
-    if (sortDirection[column] === "ascending")
-    {
-        sortDirection[column] = "descending";
-    } else
-    {
-        sortDirection[column] = "ascending";
-    }
+    // Toggle the sort direction for this column
+    sortDirection[column] = sortDirection[column] === "ascending" ? "descending" : "ascending";
 
-    if (sortDirection[column] === "ascending")
-    {
-        goal.targets.sort((a, b) => a[column] < b[column] ? -1 : 1);
-    } else
-    {
-        goal.targets.sort((a, b) => a[column] < b[column] ? 1 : -1);
+    // Sort the targets array
+    goal.targets.sort((a, b) => {
+        // Determine the values to compare
+        let x = column === "favourite" ? a.examples.some(target => target.isFavourite) : a[column];
+        let y = column === "favourite" ? b.examples.some(target => target.isFavourite) : b[column];
 
-    }
+        // Compare x and y based on sort direction
+        return sortDirection[column] === "ascending" ? (x > y ? 1 : -1) : (x > y ? -1 : 1);
+    });
+
+    // Re-render the table or cards
     displayData();
 }
 /*-------------------Render goal info and table rows-------------------*/
@@ -100,9 +96,9 @@ function displayData() {
 
                         <button id="BtnInsideCard" onClick="event.stopPropagation(); toggleCardMenu(${index})">▾</button>
                         
-                        <div class="cardMenu" id="cardMenu${index}">
-                            <button onclick="editTarget(${index})">Edit</button>
-                            <button class="delete_btn" onclick="deleteTarget(${index})">Delete</button>
+                        <div class="cardMenu" id="cardMenu${index}">                          
+                            <button type="button" class = "edit_btn" onclick="event.stopPropagation(); displayEditTarget(goal.targets[${index}])">Edit</button>
+                            <button type="button" class = "delete_btn" onclick="event.stopPropagation(); deleteConfirmationWindow(${target.number})">Delete</button>
                         </div>
                         
                         <h3>Target ${target.number}</h3>
@@ -123,7 +119,7 @@ function displayData() {
                 <th class = "th_selectable" onclick = handleSort("id")>ID ${sortDirection[`id`] === "ascending" ? "&#8593" : "&#8595"}</th>
                 <th class = "th_selectable" onclick = handleSort("number")>Target ${sortDirection[`number`] === "ascending" ? "&#8593" : "&#8595"}</th>
                 <th class = "th_selectable" onclick = handleSort("description")>Description ${sortDirection[`description`] === "ascending" ? "&#8593" : "&#8595"}</th>
-                <th id = "sortFavourite">Favourite</th>
+                <th class = "th_selectable" onclick = handleSort("favourite")>Favourite ${sortDirection['favourite'] === "ascending" ? "&#8593" : "&#8595"}</th>
                 <th>Actions</th>
         </tr>
             `;
@@ -169,7 +165,7 @@ function displayData() {
                     </td>
                     <td class = "actions_cell">
                     <button type="button" class = "edit_btn" onclick="displayEditTarget(goal.targets[${index}])">Edit</button>
-                    <button type="button" class = "delete_btn" onclick="deleteConfirmationWindow(${target.number})">Delete</button> 
+                    <button type="button" class = "delete_btn" onclick="deleteConfirmationWindow(${index})">Delete</button> 
                     </td>
             </tr>
                 `;
@@ -234,10 +230,35 @@ function displayInfoModal(target)
 //ADD Target to the talbe
 function addTarget()
 {
-    let number = document.getElementById("targetNumber").value
-    let title = document.getElementById("targetTitle").value
-    let description = document.getElementById("targetDescription").value
-    let descriptionDetail = document.getElementById("targetDescriptionDetail").value
+    let number = document.getElementById("targetNumber").value.trim()
+    let title = document.getElementById("targetTitle").value.trim()
+    let description = document.getElementById("targetDescription").value.trim()
+    let descriptionDetail = document.getElementById("targetDescriptionDetail").value.trim()
+    
+    let errorMessage = "";
+
+    if (number === "")
+    {
+        errorMessage = "Please enter a target number.";
+    } else if (title === "")
+    {
+        errorMessage = "Please enter a target title.";
+    } else if (description === "")
+    {
+        errorMessage = "Please enter a target description.";
+    } else if (descriptionDetail === "")
+    {
+        errorMessage = "Please enter a detailed description.";
+    }
+
+    if (errorMessage !== "")
+    {
+        document.getElementById("addTarget_error").innerText = errorMessage;
+        return;
+    }
+
+    document.getElementById("addTarget_error").innerText = "";
+
 
     // Convert tags string into array
     let tagsInput = document.getElementById("targetTags").value;
@@ -269,13 +290,17 @@ function addTarget()
         description: description,
         examples: [accessExamples] //this is the tags on JSON
     }
+    
 
     goal.targets.push(newTarget)
-
-
     displayData()
-
-//to show the table with added test
     openDatabaseTable()
 
 }
+function displayAvailableTags()
+{
+    let html = displayTags.map(tag => `<span class="tag">${tag}</span>`).join(" ");
+
+    document.getElementById("displayAvailableTags").innerHTML = html;
+}
+

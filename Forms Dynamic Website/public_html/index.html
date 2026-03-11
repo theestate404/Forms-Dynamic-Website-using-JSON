@@ -12,7 +12,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <script src = "javascript/tag_manager.js"></script>
         <script src = "javascript/fetch_goals.js"></script>
         <script src = "javascript/modalsAndMenu_logic.js"></script>
-        <script src="javascript/modify.js" type="text/javascript"></script>
+        <script src = "javascript/modify.js"></script>
     </head>
     <body>
             <button id="hamburgerButton" onclick="toggleMenu()">☰</button>
@@ -34,7 +34,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <div><h2>Delete Confirmation</h2></div>
             <div><p id="messageDelete"></p></div>
             <div>
-                <button id="confirmDelete" class = "delete_btn">Delete</button>
+                <button id="confirmDelete" class = "delete_btn" onclick = "completeDelete()">Delete</button>
                 <button type="button" id="cancelDelete" onclick="closeDeleteConfirmationWindow()">Cancel</button>
             </div>
         </dialog>
@@ -64,13 +64,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <!-- _______________ADD TARGET_______________-->
         <div id="addManager" class="page">
             <h2>Add Target</h2>
+            <p id="addTarget_error" style="color:red;"></p>
             <form id="addManagerForm">
+                <div class="card">
                 <label>Target Number</label>
                 <input type="text" id="targetNumber" placeholder="Number">
 
                 <label>Target Description</label>
                 <textarea id="targetDescription" placeholder="Target description"></textarea>
-
+                </div>
+                
+                <div class="card">
                 <label>Title</label>
                 <input type="text" id="targetTitle" placeholder="Title">
 
@@ -78,17 +82,22 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <textarea id="targetDescriptionDetail" placeholder="Description"></textarea>
 
                 <label>Images</label>
-                <input type="file" id="targetImages" multiple>
+                <input type="file" id="targetImages" accept="image/*" multiple>
+                <div id="imagePreviewContainer"></div>
 
                 <label>Tags</label>
                 <input type="text" id="targetTags" placeholder="Tags">
+                </div>
+                
+                <div class="card">
+                <h3>Available Tags</h3>
+                <div id="displayAvailableTags"></div>
+                </div>
 
                 <button type="submit" class="button">Submit</button>
             </form>
         </div>
         <!-- _______________MODIFY TARGET_______________-->
         <div id="editTargetWindow" class="page"></div>
-        <!-- _______________MODIFY EXAMPLE_______________-->
-        <div id="editExampleWindow" class="page"></div>
     </body>
 </html>

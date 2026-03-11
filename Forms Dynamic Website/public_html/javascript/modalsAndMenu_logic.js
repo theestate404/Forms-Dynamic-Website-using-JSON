@@ -13,7 +13,6 @@ function openDatabaseTable()
     document.getElementById("databaseTable").style.display = "block";
     document.getElementById("addManager").style.display = "none";
     document.getElementById("editTargetWindow").style.display="none";
-    document.getElementById("editExampleWindow").style.display="none";
 }
 function openTagManager() 
 {
@@ -23,7 +22,6 @@ function openTagManager()
     document.getElementById("databaseTable").style.display = "none";
     document.getElementById("addManager").style.display = "none";
     document.getElementById("editTargetWindow").style.display="none";
-    document.getElementById("editExampleWindow").style.display="none";
 }
 function openModifyTagModal()
 {
@@ -40,25 +38,10 @@ function openAddManager()
     document.getElementById("tagManager").style.display = "none";
     document.getElementById("databaseTable").style.display = "none";
     document.getElementById("editTargetWindow").style.display="none";
-    document.getElementById("editExampleWindow").style.display="none";
     document.getElementById("addManager").style.display = "block";
+    
+    displayAvailableTags();
 }
-
-function deleteConfirmationWindow(targetNum)
-{
-    //populating <p> message
-    let message = document.getElementById("messageDelete");
-    //build message
-    let htmlString = `Are you sure you want to delete <span class = "boldHighlight">Target ${targetNum}</span>?`;
-    //puts message in <p>
-    message.innerHTML = htmlString;
-    document.getElementById("deleteModal").showModal();
-}
-function closeDeleteConfirmationWindow()
-{
-    document.getElementById("deleteModal").close();
-}
-
 function toggleMenu()
 {
     const menu = document.getElementById("navMenu")
@@ -71,7 +54,6 @@ function toggleMenu()
     else
         btn.innerHTML = "☰"
 }
-
 function toggleCardMenu(index)
 {
     const menu = document.getElementById("cardMenu" + index);
@@ -83,4 +65,27 @@ function toggleCardMenu(index)
     {
         menu.classList.add("show")
     }
+}
+let deleteIndex = null;
+function deleteConfirmationWindow(targetIndex)
+{
+    deleteIndex = targetIndex;
+    let target = goal.targets[targetIndex];
+    //populating <p> message
+    let message = document.getElementById("messageDelete");
+    //build message
+    let htmlString = `Are you sure you want to delete <span class = "boldHighlight">Target ${target.number}</span>?`;
+    //puts message in <p>
+    message.innerHTML = htmlString;
+    document.getElementById("deleteModal").showModal();
+}
+function closeDeleteConfirmationWindow()
+{
+    document.getElementById("deleteModal").close();
+}
+function completeDelete()
+{
+    goal.targets.splice(deleteIndex,1);
+    document.getElementById("deleteModal").close();
+    displayData(); //display table again
 }

@@ -1,4 +1,5 @@
-:root{
+:root
+{
     --primary: #0B7285;        /*✅ teal */
     --primaryHover: #0E859C;
     --surface: #FFFFFF;        /* ✅cards/table/modal background */
@@ -14,25 +15,35 @@
 {
     box-sizing: border-box; /*consistent size, so padding and other aren't outside but shrinks things in'*/
 }
-a{
+
+a
+{
     text-decoration: none;
 }
-a:hover{
+
+a:hover
+{
     text-decoration: underline;
 }
+
 .error
 {
     color: red;
     font-size: 13px;
 }
-body{
+
+body
+{
     margin: 0;
     padding: 0px;
+    padding-top: 55px;
     font-family: sans-serif;
     background: #f5f5f5;
     color: #414042;
 }
-button{
+
+button
+{
     padding: 10px 14px;
     margin-right: 8px;
     border: 1px solid #cfd6dd;
@@ -40,68 +51,96 @@ button{
     border-radius: 10px;
     box-shadow: #ccc 5px 5px 5px;
 }
-button:hover{
+
+button:hover
+{
     background: #f7fbff;
     transform: translateY(-2px);
 }
-h1{
+
+h1
+{
     color: #074e63;
     font-size: 30px;
 }
-h2{
+h2
+
+{
     color: #036c82;
     font-size: 20px;
 }
-h3, h5{
+
+h3, h5
+{
     color: #036c82;
 }
-td:hover{
+
+td:hover
+{
     background: #EDFDFF;
 }
-p{
+
+p
+{
     line-height: 1.5;
 }
-input[type=text],textarea,input[type=file]{
+
+input[type=text],textarea,input[type=file]
+{
     border: 1px solid #afd9e4;
 }
+
 #deleteModal, #infoModal
 {
     position: fixed;
 }
+
 /*------------Nav Menu------------*/
-#navMenu{
+#navMenu
+{
     display: flex; /*makes it a flex container*/
     justify-content: space-between; /*items start from the left*/
     align-items: center;
     flex-wrap: nowrap;
     background: var(--primary);
-    margin: 15px 50px;
+    margin: 20px 10px;
     padding: 10px 10px;
     border-radius: 10px;
 }
-#navButtons{
+
+#navButtons
+{
     gap: 10px;
     display:flex;
     margin-left: auto;
 
 }
-#navMenu h1{
+
+#navMenu h1
+{
     color: var(--surface);
     margin:5px 5px;
 }
+
 #navMenu button{
     color: var(--primary);
     box-shadow:none;
 }
+
 /*------------Database Table------------*/
-.close_btn{
+.close_btn
+{
     background-color: var(--primary);
     color: var(--surface);
 }
-.close_btn:hover{
+
+.close_btn:hover
+{
     background-color: var(--primaryHover);
 }
-#databaseTable{ /*This is the div where the table is*/
+
+#databaseTable
+{ /*This is the div where the table is*/
     background: var(--surface);
     padding: 20px;
     border: 1px var(--border);
@@ -109,7 +148,9 @@ input[type=text],textarea,input[type=file]{
     margin: 50px 50px;
     box-shadow: #666 10px 10px 15px;
 }
-#dataTable {
+
+#dataTable 
+{
     background: var(--surface);
     width: 100%;
     max-width: 1100px;
@@ -120,51 +161,71 @@ input[type=text],textarea,input[type=file]{
     border-radius: 12px;
 }
 
-#dataTable th {
+#dataTable th 
+{
     background-color: var(--primary);
     color: var(--surface);
     border:none;
     padding: 12px;
 }
-#dataTable th:first-child {
+
+#dataTable th:first-child 
+{
     border-top-left-radius: 12px;
 }
-#dataTable th:last-child{
+
+#dataTable th:last-child
+{
     border-top-right-radius: 12px;
 }
-#dataTable td {
+
+#dataTable td 
+{
     /*border: 1px solid var(--border);*/
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     padding: 10px;
     text-align: left;
 }
-#dataTable td:first-child{
+
+#dataTable td:first-child
+{
     border-left: 1px solid var(--border);
     border-top-left-radius: 12px;
     border-bottom-left-radius: 12px;
 }
-#dataTable td:last-child{
+
+#dataTable td:last-child
+{
     border-right: 1px solid var(--border);
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
 }
-#dataTable tr:nth-child(even){
+
+#dataTable tr:nth-child(even)
+{
     background: #f9fafb;
 }
-.delete_btn{
+
+.delete_btn
+{
     background-color: #C44D46;
     color: var(--surface);
 }
-.delete_btn:hover{
+
+.delete_btn:hover
+{
     background-color: #e25851;
 }
-.fav_cell{
+
+.fav_cell
+{
     text-align: center; /*GENERAL note: centering of heart icon not working*/
     font-size: 18px;
     color: #BA343A;
     position: relative;
 }
+
 .fav_tooltip
 {
     top: -1px;
@@ -187,6 +248,7 @@ input[type=text],textarea,input[type=file]{
     transform: scaleX(1);
     opacity: 1;
 }
+
 /*------------Tags Manager window------------*/
 .tag
 {
@@ -196,6 +258,7 @@ input[type=text],textarea,input[type=file]{
     margin: 3px;
     border-radius: 8px;
 }
+
 /*------------DIALOG EXAMPLES------------*/
 dialog{
     max-width: 800px;
@@ -203,24 +266,33 @@ dialog{
     border:none;
     position: relative;
 }
-#closeInfoModal{
+
+#closeInfoModal
+{
     position: absolute;
     top:15px;
     right: 15px;
 }
-#exampleTarget{
+
+#exampleTarget
+{
     background: var(--primary);
     padding: 20px 24px;
     border-radius: 40px;
     color: var(--surface);
     display: inline-block;
 }
-.rating_stars_display{
+
+.rating_stars_display
+{
     font-size: 18px;
 }
-#hamburgerButton {
+
+#hamburgerButton 
+{
     display: none;
 }
+
 /*------------Confirmation Window------------*/
 .boldHighlight{
     font-weight: bold;
@@ -292,15 +364,14 @@ input,textarea
 
     flex-direction: column;
     gap: 6px;
-
 }
-
 
 /*The .show will be selected and display the bottons*/
 .cardMenu.show
 {
     display: block;
 }
+
 /*---------Modify---------*/
 .card label
 {
@@ -308,6 +379,7 @@ input,textarea
     gap: 4px;
     margin-bottom: 0;
 }
+
 .previewImage
 {
     width: 100%;
@@ -330,7 +402,8 @@ input,textarea
 }
 /*------------MOBILE PHONES------------*/
 @media screen and (max-width: 786px) {
-    #hamburgerButton {
+    #hamburgerButton 
+    {
         display: block;
         position: fixed;
         top: 15px;
@@ -345,7 +418,8 @@ input,textarea
         box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
 
-    #navMenu {
+    #navMenu 
+    {
         display: none;
         flex-direction: column;
         align-items: stretch;
@@ -355,11 +429,13 @@ input,textarea
         border-radius: 12px;
     }
 
-    #navMenu.show {
+    #navMenu.show 
+    {
         display: flex;
     }
 
-    #navButtons {
+    #navButtons 
+    {
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -367,12 +443,19 @@ input,textarea
         width: 100%;
     }
 
-    #navButtons button {
+    #navButtons button 
+    {
         width: 100%;
         font-size: 16px;
         margin-right: 0;
     }
 
+    dialog
+    {
+        width: 95%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
 
     #databaseTable
     {
@@ -392,6 +475,11 @@ input,textarea
         border-radius: 10px;
         padding: 12px;
         background: white;
+    }
+    
+    .fav_tooltip 
+    {
+        display: none;
     }
 
 }
