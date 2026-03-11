@@ -225,7 +225,7 @@ function saveModifyTarget(targetId)
             
             //Learned about how files are stored and how to limit to images https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/file
             //Learned about how to create an on object url for a blob/File https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL_static
-        })
+        });
 
         let inputTags = document.getElementById(`modifyExampleTags_${index}`).value.split(',');
         if(document.getElementById(`modifyExampleTags_${index}`).value === "")
