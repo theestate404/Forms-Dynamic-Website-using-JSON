@@ -98,7 +98,7 @@ function displayData() {
                         
                         <div class="cardMenu" id="cardMenu${index}">                          
                             <button type="button" class = "edit_btn" onclick="event.stopPropagation(); displayEditTarget(goal.targets[${index}])">Edit</button>
-                            <button type="button" class = "delete_btn" onclick="event.stopPropagation(); deleteConfirmationWindow(${target.number})">Delete</button>
+                            <button type="button" class = "delete_btn" onclick="event.stopPropagation(); deleteConfirmationWindow(${index})">Delete</button>
                         </div>
                         
                         <h3>Target ${target.number}</h3>
