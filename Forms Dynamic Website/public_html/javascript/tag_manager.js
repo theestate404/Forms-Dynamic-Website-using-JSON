@@ -138,7 +138,15 @@ function modifyTag()
             }
         });
     });
-
+    
+    for (let i = 0; i < displayTags.length; i++)
+    {
+        if (displayTags[i].toLowerCase() === oldTag.toLowerCase())
+        {
+            displayTags[i] = newTag;
+            foundTag = true;
+        }
+    }
     // If old tag is not found anywhere
     if (!foundTag) {
         errorElement.innerText = `No tag found with the value "${oldTag}"`;
