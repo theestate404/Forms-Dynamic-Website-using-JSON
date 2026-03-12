@@ -69,24 +69,29 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <div class="card">
                 <label>Target Number</label>
                 <input type="text" id="targetNumber" placeholder="Number">
+                <p class="error" id="targetNumberError"></p>
 
                 <label>Target Description</label>
                 <textarea id="targetDescription" placeholder="Target description"></textarea>
+                <p class="error" id="targetDescriptionError"></p>
                 </div>
                 
                 <div class="card">
                 <label>Title</label>
                 <input type="text" id="targetTitle" placeholder="Title">
+                <p class="error" id="targetTitleError"></p>
 
                 <label>Description</label>
                 <textarea id="targetDescriptionDetail" placeholder="Description"></textarea>
+                <p class="error" id="targetDescriptionDetailError"></p>
 
                 <label>Images</label>
                 <input type="file" id="targetImages" accept="image/*" multiple>
-                <div id="imagePreviewContainer"></div>
+                <p class="error" id="targetImagesError"></p>
 
                 <label>Tags</label>
                 <input type="text" id="targetTags" placeholder="Tags">
+                <p class="error" id="targetTagsError"></p>
                 </div>
                 
                 <div class="card">

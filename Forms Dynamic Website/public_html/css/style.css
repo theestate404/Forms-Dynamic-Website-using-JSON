@@ -98,13 +98,12 @@ input[type=text],textarea,input[type=file]
 /*------------Nav Menu------------*/
 #navMenu
 {
-    display: flex; /*makes it a flex container*/
-    justify-content: space-between; /*items start from the left*/
+    display: flex; 
     align-items: center;
     flex-wrap: nowrap;
     background: var(--primary);
     margin: 20px 10px;
-    padding: 10px 10px;
+    padding: 14px 12px;
     border-radius: 10px;
 }
 
@@ -113,6 +112,7 @@ input[type=text],textarea,input[type=file]
     gap: 10px;
     display:flex;
     margin-left: auto;
+    align-items: center;
 
 }
 
@@ -122,7 +122,8 @@ input[type=text],textarea,input[type=file]
     margin:5px 5px;
 }
 
-#navMenu button{
+#navMenu button
+{
     color: var(--primary);
     box-shadow:none;
 }
@@ -143,7 +144,7 @@ input[type=text],textarea,input[type=file]
 { /*This is the div where the table is*/
     background: var(--surface);
     padding: 20px;
-    border: 1px var(--border);
+    border: 1px solid var(--border);
     border-radius: 12px;
     margin: 50px 50px;
     box-shadow: #666 10px 10px 15px;

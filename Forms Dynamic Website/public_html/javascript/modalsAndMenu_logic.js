@@ -44,15 +44,15 @@ function openAddManager()
 }
 function toggleMenu()
 {
-    const menu = document.getElementById("navMenu")
-    const btn = document.getElementById("hamburgerButton")
+    const menu = document.getElementById("navMenu");
+    const btn = document.getElementById("hamburgerButton");
 
     menu.classList.toggle("show");
 
     if (menu.classList.contains("show"))
-        btn.innerHTML = "✕"
+        btn.innerHTML = "✕";
     else
-        btn.innerHTML = "☰"
+        btn.innerHTML = "☰";
 }
 function toggleCardMenu(index)
 {
@@ -60,10 +60,10 @@ function toggleCardMenu(index)
 
     if (menu.classList.contains("show"))
     {
-        menu.classList.remove("show")
+        menu.classList.remove("show");
     } else
     {
-        menu.classList.add("show")
+        menu.classList.add("show");
     }
 }
 let deleteIndex = null;

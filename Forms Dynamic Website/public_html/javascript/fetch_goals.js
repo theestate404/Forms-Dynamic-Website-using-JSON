@@ -99,13 +99,13 @@ function displayData() {
                         <div class="cardMenu" id="cardMenu${index}">                          
                             <button type="button" class = "edit_btn" onclick="event.stopPropagation(); displayEditTarget(goal.targets[${index}])">Edit</button>
                             <button type="button" class = "delete_btn" onclick="event.stopPropagation(); deleteConfirmationWindow(${index})">Delete</button>
+           
                         </div>
                         
                         <h3>Target ${target.number}</h3>
                         <p>${target.description}</p>
                         
-                    </div>`
-            //onclick="event.stopPropagation(); will stop the openInforModal
+                    </div>`;
 
         });
     }
@@ -227,52 +227,78 @@ function displayInfoModal(target)
     document.getElementById("closeInfoModal").onclick = closeInfoModal;
 }
 
-//ADD Target to the talbe
+//ADD Target to the table
 function addTarget()
 {
-    let number = document.getElementById("targetNumber").value.trim()
-    let title = document.getElementById("targetTitle").value.trim()
-    let description = document.getElementById("targetDescription").value.trim()
-    let descriptionDetail = document.getElementById("targetDescriptionDetail").value.trim()
+    let number = document.getElementById("targetNumber").value.trim();
+    let title = document.getElementById("targetTitle").value.trim();
+    let description = document.getElementById("targetDescription").value.trim();
+    let descriptionDetail = document.getElementById("targetDescriptionDetail").value.trim();
+    let tagsInput = document.getElementById("targetTags").value.trim();
+    let imageFiles = document.getElementById("targetImages").files;
     
-    let errorMessage = "";
+    let caughtError = false;
+    
+    document.getElementById("targetNumberError").innerText = "";
+    document.getElementById("targetDescriptionError").innerText = "";
+    document.getElementById("targetTitleError").innerText = "";
+    document.getElementById("targetDescriptionDetailError").innerText = "";
+    document.getElementById("targetImagesError").innerText = "";
+    document.getElementById("targetTagsError").innerText = "";
 
     if (number === "")
-    {
-        errorMessage = "Please enter a target number.";
-    } else if (title === "")
-    {
-        errorMessage = "Please enter a target title.";
-    } else if (description === "")
-    {
-        errorMessage = "Please enter a target description.";
-    } else if (descriptionDetail === "")
-    {
-        errorMessage = "Please enter a detailed description.";
-    }
+        {
+        document.getElementById("targetNumberError").innerText = "Please enter a target number.";
+                caughtError = true;
+        }
 
-    if (errorMessage !== "")
-    {
-        document.getElementById("addTarget_error").innerText = errorMessage;
+    if (description === "")
+        {
+        document.getElementById("targetDescriptionError").innerText = "Please enter a target description.";
+                caughtError = true;
+        }
+
+    if (title === "")
+        {
+        document.getElementById("targetTitleError").innerText = "Please enter a title.";
+                caughtError = true;
+        }
+
+    if (descriptionDetail === "")
+        {
+        document.getElementById("targetDescriptionDetailError").innerText = "Please enter a detailed description.";
+                caughtError = true;
+        }
+
+    if (imageFiles.length === 0)
+        {
+        document.getElementById("targetImagesError").innerText = "Please add at least one image.";
+                caughtError = true;
+        }
+
+    if (tagsInput === "")
+        {
+        document.getElementById("targetTagsError").innerText = "Please enter at least one tag.";
+                caughtError = true;
+        }
+
+    if (caughtError)
+        {
         return;
-    }
-
-    document.getElementById("addTarget_error").innerText = "";
-
+        }
 
     // Convert tags string into array
-    let tagsInput = document.getElementById("targetTags").value;
     let tagsArray = tagsInput ? tagsInput.split(",").map(tag => tag.trim()) : [];
 
     // Convert file input into array of image names
-    let imageFiles = document.getElementById("targetImages").files;
     let imagesArray = [];
 
     for (let i = 0; i < imageFiles.length; i++) {
         imagesArray.push(URL.createObjectURL(imageFiles[i]));
     }
 
-    uniqueId++
+    uniqueId++;
+    
     let accessExamples = {
         title: title,
         description: descriptionDetail,
@@ -282,19 +308,19 @@ function addTarget()
         //it is a new entry.
         isFavourite: false,
         rating_random: 0
-    }
+    };
 
     let newTarget = {
         id: uniqueId,
         number: number,
         description: description,
         examples: [accessExamples] //this is the tags on JSON
-    }
+    };
     
 
-    goal.targets.push(newTarget)
-    displayData()
-    openDatabaseTable()
+    goal.targets.push(newTarget);
+    displayData();
+    openDatabaseTable();
 
 }
 function displayAvailableTags()
